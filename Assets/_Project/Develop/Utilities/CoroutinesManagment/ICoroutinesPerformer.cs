@@ -1,8 +1,12 @@
 using System.Collections;
 using UnityEngine;
 
-public interface ICoroutinesPerformer
+namespace Utilities.CoroutinesManagment
 {
-    Coroutine StartPerform(IEnumerator coroutine);
-    void StopPerform(Coroutine coroutine);
+
+    public interface ICoroutinesPerformer
+    {
+        Coroutine StartPerform(IEnumerator coroutine);
+        void StopPerform(Coroutine coroutine);
+    }
 }
