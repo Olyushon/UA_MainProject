@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace Utilities.CoroutinesManagment
 {
-
     public class CoroutinesPerformer : MonoBehaviour, ICoroutinesPerformer
     {
         private void Awake()
@@ -16,6 +15,5 @@ namespace Utilities.CoroutinesManagment
 
         public void StopPerform(Coroutine coroutine) 
             => StopCoroutine(coroutine);
-
     }
 }
