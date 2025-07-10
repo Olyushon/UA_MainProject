@@ -5,6 +5,10 @@ using Utilities.CoroutinesManagment;
 using Object = UnityEngine.Object;
 using Utilities.AssetsManagment;
 using Utilities.ConfigsManagment;
+using Meta.Features.Wallet;
+using System.Collections.Generic;
+using System;
+using Utilities.Reactive;
 
 namespace Infrastructure.EntryPoint
 {
@@ -23,6 +27,18 @@ namespace Infrastructure.EntryPoint
             container.RegisterAsSingle(CreateSceneSwitcherService);
 
             container.RegisterAsSingle<ILoadingScreen>(CreateLoadingScreen);
+
+            container.RegisterAsSingle(CreateWalletService);
+        }
+
+        private static WalletService CreateWalletService(DIContainer c)
+        {
+            Dictionary<CurrencyType, ReactiveVariable<int>> currencies = new();
+
+            foreach (CurrencyType currencyType in Enum.GetValues(typeof(CurrencyType)))
+                currencies[currencyType] = new ReactiveVariable<int>();
+
+            return new WalletService(currencies);
         }
 
         private static CoroutinesPerformer CreateCoroutinesPerformer(DIContainer c)
