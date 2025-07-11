@@ -9,6 +9,11 @@ using Meta.Features.Wallet;
 using System.Collections.Generic;
 using System;
 using Utilities.Reactive;
+using Utilities.DataManagment;
+using Utilities.DataManagment.Serializers;
+using Utilities.DataManagment.KeysStorage;
+using Utilities.DataManagment.DataRepository;
+using UnityEngine;
 
 namespace Infrastructure.EntryPoint
 {
@@ -29,6 +34,20 @@ namespace Infrastructure.EntryPoint
             container.RegisterAsSingle<ILoadingScreen>(CreateLoadingScreen);
 
             container.RegisterAsSingle(CreateWalletService);
+            
+            container.RegisterAsSingle<ISaveLoadService>(CreateSaveLoadService);
+        }
+
+        private static SaveLoadService CreateSaveLoadService(DIContainer c)
+        {
+            IDataSerializer dataSerializer = new JsonSerializer();
+            IDataKeysStorage dataKeysStorage = new MapDataKeysStorage();
+
+            string saveFolderPath = Application.isEditor ? Application.dataPath : Application.persistentDataPath;
+
+            IDataRepository dataRepository = new LocalFileDataRepository(saveFolderPath, "json");
+
+            return new SaveLoadService(dataSerializer, dataKeysStorage, dataRepository);
         }
 
         private static WalletService CreateWalletService(DIContainer c)
