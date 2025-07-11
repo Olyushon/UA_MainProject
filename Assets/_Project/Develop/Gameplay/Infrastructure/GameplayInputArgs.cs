@@ -1,5 +1,5 @@
 using Utilities.SceneManagment;
-using Utilities.SequenceManagment;
+using Gameplay.Features.SequenceManagment;
 
 namespace Gameplay.Infrastructure
 {

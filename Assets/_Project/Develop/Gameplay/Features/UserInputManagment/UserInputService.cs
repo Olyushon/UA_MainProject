@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Utilities.UserInputManagment
+namespace Gameplay.Features.UserInputManagment
 {
     public class UserInputService
     {

@@ -1,7 +1,7 @@
 using Infrastructure.DI;
 using Utilities.AssetsManagment;
-using Utilities.SequenceManagment;
-using Utilities.UserInputManagment;
+using Gameplay.Features.SequenceManagment;
+using Gameplay.Features.UserInputManagment;
 
 namespace Gameplay.Infrastructure
 {
