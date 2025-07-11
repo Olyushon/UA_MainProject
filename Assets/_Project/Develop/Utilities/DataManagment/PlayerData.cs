@@ -3,7 +3,7 @@ using Meta.Features.Wallet;
 
 namespace Utilities.DataManagment
 {
-    public class PlayerData
+    public class PlayerData : ISaveData
     {
         public Dictionary<CurrencyType, int> WalletData;
     }
