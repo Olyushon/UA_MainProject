@@ -14,6 +14,7 @@ using Utilities.DataManagment.Serializers;
 using Utilities.DataManagment.KeysStorage;
 using Utilities.DataManagment.DataRepository;
 using UnityEngine;
+using Utilities.DataManagment.DataProviders;
 
 namespace Infrastructure.EntryPoint
 {
@@ -36,7 +37,12 @@ namespace Infrastructure.EntryPoint
             container.RegisterAsSingle(CreateWalletService);
             
             container.RegisterAsSingle<ISaveLoadService>(CreateSaveLoadService);
+
+            container.RegisterAsSingle(CreatePlayerDataProvider);
         }
+
+        private static PlayerDataProvider CreatePlayerDataProvider(DIContainer c)
+            => new PlayerDataProvider(c.Resolve<ISaveLoadService>());
 
         private static SaveLoadService CreateSaveLoadService(DIContainer c)
         {

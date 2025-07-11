@@ -5,6 +5,7 @@ using Utilities.SceneManagment;
 using Utilities.LoadingScreen;
 using Utilities.CoroutinesManagment;
 using Utilities.ConfigsManagment;
+using Utilities.DataManagment.DataProviders;
 
 namespace Infrastructure.EntryPoint
 {
@@ -31,10 +32,20 @@ namespace Infrastructure.EntryPoint
         {
             ILoadingScreen loadingScreen = container.Resolve<ILoadingScreen>();
             SceneSwitcherService sceneSwitcherService = container.Resolve<SceneSwitcherService>();
+            PlayerDataProvider playerDataProvider = container.Resolve<PlayerDataProvider>();
 
             loadingScreen.Show();
 
             yield return container.Resolve<ConfigProviderService>().LoadAsync();
+
+            bool isPlayerDataSaveExists = false;
+
+            yield return playerDataProvider.Exists(result => isPlayerDataSaveExists = result);
+
+            if (isPlayerDataSaveExists)
+                yield return playerDataProvider.Load();
+            else
+                playerDataProvider.Reset();
 
             yield return new WaitForSeconds(1f);
 
