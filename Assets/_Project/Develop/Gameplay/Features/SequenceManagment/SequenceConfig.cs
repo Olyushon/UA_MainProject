@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Utilities.SequenceManagment
+namespace Gameplay.Features.SequenceManagment
 {
     [CreateAssetMenu(menuName = "Configs/SequenceConfig", fileName = "SequenceConfig")]
     public class SequenceConfig : ScriptableObject

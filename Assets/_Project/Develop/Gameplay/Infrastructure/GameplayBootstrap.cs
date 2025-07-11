@@ -2,11 +2,11 @@ using Infrastructure;
 using Infrastructure.DI;
 using Utilities.CoroutinesManagment;
 using Utilities.SceneManagment;
-using Utilities.SequenceManagment;
+using Gameplay.Features.SequenceManagment;
 using System;
 using System.Collections;
 using UnityEngine;
-using Utilities.UserInputManagment;
+using Gameplay.Features.UserInputManagment;
 
 namespace Gameplay.Infrastructure
 {

@@ -1,7 +1,7 @@
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Utilities.SequenceManagment
+namespace Gameplay.Features.SequenceManagment
 {
     public class SequenceService
     {

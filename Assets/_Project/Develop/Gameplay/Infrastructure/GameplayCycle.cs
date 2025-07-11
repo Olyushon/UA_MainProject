@@ -3,8 +3,8 @@ using Infrastructure.DI;
 using UnityEngine;
 using Utilities.CoroutinesManagment;
 using Utilities.SceneManagment;
-using Utilities.SequenceManagment;
-using Utilities.UserInputManagment;
+using Gameplay.Features.SequenceManagment;
+using Gameplay.Features.UserInputManagment;
 
 namespace Gameplay.Infrastructure
 {

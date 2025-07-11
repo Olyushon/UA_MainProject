@@ -2,7 +2,7 @@ using Infrastructure;
 using Infrastructure.DI;
 using Utilities.CoroutinesManagment;
 using Utilities.SceneManagment;
-using Utilities.SequenceManagment;
+using Gameplay.Features.SequenceManagment;
 using Gameplay.Infrastructure;
 using System.Collections;
 using UnityEngine;
