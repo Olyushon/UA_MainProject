@@ -1,4 +1,4 @@
-namespace Utilities.SequenceManagment
+namespace Gameplay.Features.SequenceManagment
 {
     public enum SequenceType
     {

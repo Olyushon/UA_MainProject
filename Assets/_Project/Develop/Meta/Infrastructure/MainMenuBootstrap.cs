@@ -2,22 +2,16 @@ using Infrastructure;
 using Infrastructure.DI;
 using Utilities.CoroutinesManagment;
 using Utilities.SceneManagment;
-using Utilities.SequenceManagment;
-using Gameplay.Infrastructure;
 using System.Collections;
 using UnityEngine;
+using Gameplay.Features.GameModeManagment;
 
 namespace Meta.Infrastructure
 {
     public class MainMenuBootstrap : SceneBootstrap
     {
-        private KeyCode _digitModeKey = KeyCode.Alpha1;
-        private KeyCode _lettersModeKey = KeyCode.Alpha2;
-        private readonly string _startMessage = "Select game mode: {0} - Numbers, {1} - Letters";
-
         private DIContainer _container;
-        private SceneSwitcherService _sceneSwitcherService;
-        private ICoroutinesPerformer _coroutinesPerformer;
+        private GameModeSelector _gameModeSelector;
 
         public override void ProcessRegistrations(DIContainer container, IInputSceneArgs sceneArgs = null)
         {
@@ -35,26 +29,16 @@ namespace Meta.Infrastructure
         {
             Debug.Log("Main menu scene");
 
-            _sceneSwitcherService = _container.Resolve<SceneSwitcherService>();
-            _coroutinesPerformer = _container.Resolve<ICoroutinesPerformer>();
+            _gameModeSelector = new GameModeSelector(
+                _container.Resolve<ICoroutinesPerformer>(), 
+                _container.Resolve<SceneSwitcherService>());
 
-            Debug.LogFormat(_startMessage, (char)_digitModeKey, (char)_lettersModeKey);
+            _gameModeSelector.Start();
         }
 
         private void Update()
         {
-            if (Input.GetKeyDown(_digitModeKey))
-            {
-                _coroutinesPerformer.StartPerform(_sceneSwitcherService.ProcessSwitchTo(
-                    Scenes.Gameplay, 
-                    new GameplayInputArgs(SequenceType.Numbers)));
-            }
-            else if (Input.GetKeyDown(_lettersModeKey))
-            {
-                _coroutinesPerformer.StartPerform(_sceneSwitcherService.ProcessSwitchTo(
-                    Scenes.Gameplay, 
-                    new GameplayInputArgs(SequenceType.Letters)));
-            }
+            _gameModeSelector?.Update(Time.deltaTime);
         }
     }
 }
