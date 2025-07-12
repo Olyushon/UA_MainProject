@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using Utilities.AssetsManagment;
+using Gameplay.Configs.Meta.Wallet;
 
 namespace Utilities.ConfigsManagment
 {
@@ -12,7 +13,7 @@ namespace Utilities.ConfigsManagment
 
         private readonly Dictionary<Type, string> _configsResourcesPaths = new()
         {
-
+            {typeof(StartWalletConfig), "Configs/Meta/Wallet/StartWalletConfig" }
         };
 
         public ResourcesConfigsLoader(ResourcesLoader resources)
