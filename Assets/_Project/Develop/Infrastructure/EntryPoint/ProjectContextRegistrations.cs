@@ -34,7 +34,7 @@ namespace Infrastructure.EntryPoint
 
             container.RegisterAsSingle<ILoadingScreen>(CreateLoadingScreen);
 
-            container.RegisterAsSingle(CreateWalletService);
+            container.RegisterAsSingle(CreateWalletService).NonLazy();
             
             container.RegisterAsSingle<ISaveLoadService>(CreateSaveLoadService);
 

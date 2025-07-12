@@ -19,6 +19,8 @@ namespace Infrastructure.EntryPoint
 
             ProjectContextRegistrations.Process(projectContainer);
 
+            projectContainer.Initialize();
+
             projectContainer.Resolve<ICoroutinesPerformer>().StartPerform(Initialize(projectContainer));
         }
 
