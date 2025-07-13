@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Gameplay.Configs.Meta.Wallet;
+using Meta.Features.Counters;
 using Meta.Features.Wallet;
 using Utilities.ConfigsManagment;
 
@@ -22,6 +23,7 @@ namespace Utilities.DataManagment.DataProviders
             return new PlayerData()
             {
                 WalletData = InitWalletData(),
+                CountersData = InitCountersData(),
             };
         }
 
@@ -35,6 +37,16 @@ namespace Utilities.DataManagment.DataProviders
                 walletData[currencyType] = walletConfig.GetValueFor(currencyType);
 
             return walletData;
+        }
+
+        private Dictionary<CounterType, int> InitCountersData()
+        {
+            Dictionary<CounterType, int> countersData = new();
+
+            foreach (CounterType counterType in Enum.GetValues(typeof(CounterType)))
+                countersData[counterType] = 0;
+
+            return countersData;
         }
     }
 }

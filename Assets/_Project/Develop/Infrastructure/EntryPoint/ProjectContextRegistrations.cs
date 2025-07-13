@@ -15,6 +15,8 @@ using Utilities.DataManagment.KeysStorage;
 using Utilities.DataManagment.DataRepository;
 using UnityEngine;
 using Utilities.DataManagment.DataProviders;
+using Meta.Features.Counters;
+using Gameplay.Features.CostsManagment;
 
 namespace Infrastructure.EntryPoint
 {
@@ -39,6 +41,25 @@ namespace Infrastructure.EntryPoint
             container.RegisterAsSingle<ISaveLoadService>(CreateSaveLoadService);
 
             container.RegisterAsSingle(CreatePlayerDataProvider);
+
+            container.RegisterAsSingle(CreateCountersDataService).NonLazy();
+
+            container.RegisterAsSingle(CreateCostsCalculateService);
+        }
+
+        private static CostsCalculateService CreateCostsCalculateService(DIContainer c)
+        {
+            return new CostsCalculateService(c.Resolve<WalletService>(), c.Resolve<ConfigProviderService>());
+        }
+
+        private static CountersDataService CreateCountersDataService(DIContainer c)
+        {
+            Dictionary<CounterType, ReactiveVariable<int>> counters = new();
+
+            foreach (CounterType counterType in Enum.GetValues(typeof(CounterType)))
+                counters[counterType] = new ReactiveVariable<int>();
+
+            return new CountersDataService(counters, c.Resolve<PlayerDataProvider>());
         }
 
         private static PlayerDataProvider CreatePlayerDataProvider(DIContainer c)

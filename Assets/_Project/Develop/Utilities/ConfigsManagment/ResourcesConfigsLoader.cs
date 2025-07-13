@@ -13,7 +13,8 @@ namespace Utilities.ConfigsManagment
 
         private readonly Dictionary<Type, string> _configsResourcesPaths = new()
         {
-            {typeof(StartWalletConfig), "Configs/Meta/Wallet/StartWalletConfig" }
+            {typeof(StartWalletConfig), "Configs/Meta/Wallet/StartWalletConfig" },
+            {typeof(CostsConfig), "Configs/Meta/Wallet/CostsConfig" }
         };
 
         public ResourcesConfigsLoader(ResourcesLoader resources)
