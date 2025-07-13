@@ -5,6 +5,18 @@ using Utilities.CoroutinesManagment;
 using Object = UnityEngine.Object;
 using Utilities.AssetsManagment;
 using Utilities.ConfigsManagment;
+using Meta.Features.Wallet;
+using System.Collections.Generic;
+using System;
+using Utilities.Reactive;
+using Utilities.DataManagment;
+using Utilities.DataManagment.Serializers;
+using Utilities.DataManagment.KeysStorage;
+using Utilities.DataManagment.DataRepository;
+using UnityEngine;
+using Utilities.DataManagment.DataProviders;
+using Meta.Features.Counters;
+using Gameplay.Features.CostsManagment;
 
 namespace Infrastructure.EntryPoint
 {
@@ -23,6 +35,56 @@ namespace Infrastructure.EntryPoint
             container.RegisterAsSingle(CreateSceneSwitcherService);
 
             container.RegisterAsSingle<ILoadingScreen>(CreateLoadingScreen);
+
+            container.RegisterAsSingle(CreateWalletService).NonLazy();
+            
+            container.RegisterAsSingle<ISaveLoadService>(CreateSaveLoadService);
+
+            container.RegisterAsSingle(CreatePlayerDataProvider);
+
+            container.RegisterAsSingle(CreateCountersDataService).NonLazy();
+
+            container.RegisterAsSingle(CreateCostsCalculateService);
+        }
+
+        private static CostsCalculateService CreateCostsCalculateService(DIContainer c)
+        {
+            return new CostsCalculateService(c.Resolve<WalletService>(), c.Resolve<ConfigProviderService>());
+        }
+
+        private static CountersDataService CreateCountersDataService(DIContainer c)
+        {
+            Dictionary<CounterType, ReactiveVariable<int>> counters = new();
+
+            foreach (CounterType counterType in Enum.GetValues(typeof(CounterType)))
+                counters[counterType] = new ReactiveVariable<int>();
+
+            return new CountersDataService(counters, c.Resolve<PlayerDataProvider>());
+        }
+
+        private static PlayerDataProvider CreatePlayerDataProvider(DIContainer c)
+            => new PlayerDataProvider(c.Resolve<ISaveLoadService>(), c.Resolve<ConfigProviderService>());
+
+        private static SaveLoadService CreateSaveLoadService(DIContainer c)
+        {
+            IDataSerializer dataSerializer = new JsonSerializer();
+            IDataKeysStorage dataKeysStorage = new MapDataKeysStorage();
+
+            string saveFolderPath = Application.isEditor ? Application.dataPath : Application.persistentDataPath;
+
+            IDataRepository dataRepository = new LocalFileDataRepository(saveFolderPath, "json");
+
+            return new SaveLoadService(dataSerializer, dataKeysStorage, dataRepository);
+        }
+
+        private static WalletService CreateWalletService(DIContainer c)
+        {
+            Dictionary<CurrencyType, ReactiveVariable<int>> currencies = new();
+
+            foreach (CurrencyType currencyType in Enum.GetValues(typeof(CurrencyType)))
+                currencies[currencyType] = new ReactiveVariable<int>();
+
+            return new WalletService(currencies, c.Resolve<PlayerDataProvider>());
         }
 
         private static CoroutinesPerformer CreateCoroutinesPerformer(DIContainer c)

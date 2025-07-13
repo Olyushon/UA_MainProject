@@ -7,6 +7,8 @@ using System;
 using System.Collections;
 using UnityEngine;
 using Gameplay.Features.UserInputManagment;
+using Meta.Features.Counters;
+using Gameplay.Features.CostsManagment;
 
 namespace Gameplay.Infrastructure
 {
@@ -40,7 +42,9 @@ namespace Gameplay.Infrastructure
                 _container.Resolve<SequenceService>(),
                 _userInputService,
                 _container.Resolve<SceneSwitcherService>(),
-                _container.Resolve<ICoroutinesPerformer>());
+                _container.Resolve<ICoroutinesPerformer>(),
+                _container.Resolve<CountersDataService>(),
+                _container.Resolve<CostsCalculateService>());
 
             yield return _gameplayCycle.Prepare();
  

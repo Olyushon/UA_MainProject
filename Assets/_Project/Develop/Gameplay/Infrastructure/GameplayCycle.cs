@@ -5,6 +5,8 @@ using Utilities.CoroutinesManagment;
 using Utilities.SceneManagment;
 using Gameplay.Features.SequenceManagment;
 using Gameplay.Features.UserInputManagment;
+using Meta.Features.Counters;
+using Gameplay.Features.CostsManagment;
 
 namespace Gameplay.Infrastructure
 {
@@ -22,6 +24,8 @@ namespace Gameplay.Infrastructure
         private GameplayInputArgs _inputArgs;
         private SceneSwitcherService _sceneSwitcherService;
         private ICoroutinesPerformer _coroutinesPerformer;
+        private CountersDataService _countersDataService;
+        private CostsCalculateService _costsCalculateService;
 
         private string _sequence;
         private string _sceneGoTo;
@@ -31,13 +35,17 @@ namespace Gameplay.Infrastructure
             SequenceService sequenceService, 
             UserInputService userInputService,
             SceneSwitcherService sceneSwitcherService, 
-            ICoroutinesPerformer coroutinesPerformer)
+            ICoroutinesPerformer coroutinesPerformer, 
+            CountersDataService countersDataService,
+            CostsCalculateService costsCalculateService)
         {
             _inputArgs = inputArgs;
             _sequenceService = sequenceService;
             _userInputService = userInputService;
             _sceneSwitcherService = sceneSwitcherService;
             _coroutinesPerformer = coroutinesPerformer;
+            _countersDataService = countersDataService;
+            _costsCalculateService = costsCalculateService;
         }
 
         public IEnumerator Prepare()
@@ -74,6 +82,9 @@ namespace Gameplay.Infrastructure
         private void HandleWin() {
             HandleEnd();
 
+            _countersDataService.IncreaseCounter(CounterType.Win);
+            _costsCalculateService.AddWinCost();
+
             Debug.Log(_winMessage);
             Debug.LogFormat(_restartMessage, _restartKey);
 
@@ -82,6 +93,9 @@ namespace Gameplay.Infrastructure
 
         private void HandleLose(string userInput) {
             HandleEnd();
+
+            _countersDataService.IncreaseCounter(CounterType.Lose);
+            _costsCalculateService.TrySpendLoseCost();
 
             Debug.LogFormat(_loseMessage, userInput);
             Debug.LogFormat(_restartMessage, _restartKey);
