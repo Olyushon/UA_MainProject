@@ -1,57 +1,52 @@
 using UnityEngine;
+using Utilities.AssetsManagment;
 using Random = UnityEngine.Random;
 
 namespace Gameplay.Features.SequenceManagment
 {
     public class SequenceService
     {
-        private readonly SequenceConfig _sequenceConfig;
+        private readonly SequenceMainConfig _sequenceMainConfig;
+        private readonly ResourcesLoader _resourcesLoader;
 
-        public SequenceService(SequenceConfig sequenceConfig)
+        public SequenceService(SequenceMainConfig sequenceMainConfig, ResourcesLoader resourcesLoader)
         {
-            _sequenceConfig = sequenceConfig;
+            _sequenceMainConfig = sequenceMainConfig;
+            _resourcesLoader = resourcesLoader;
         }
 
         public KeyCode GetEnterKey()
         {
-            return _sequenceConfig.EnterKey;
+            return _sequenceMainConfig.EnterKey;
         }
 
         public string GetSequence(SequenceType sequenceType)
         {
+            SequenceConfig sequenceConfig;
+
             switch (sequenceType)
             {
                 case SequenceType.Numbers:
-                    return GetNumbersSequence();
+                    sequenceConfig = _resourcesLoader.Load<SequenceConfig>("Configs/NumbersSequenceConfig");
+                    return GetSequence(sequenceConfig);
                 case SequenceType.Letters:
-                    return GetLettersSequence();
+                    sequenceConfig = _resourcesLoader.Load<SequenceConfig>("Configs/LettersSequenceConfig");
+                    return GetSequence(sequenceConfig);
                 default:
                     Debug.LogError("Invalid sequence type");
                     return null;
             }
         }
 
-        private string GetNumbersSequence()
+        public string GetSequence(SequenceConfig sequenceConfig)
         {
             string sequence = "";
 
-            for (int i = 0; i < _sequenceConfig.Length; i++)
+            for (int i = 0; i < _sequenceMainConfig.Length; i++)
             {
-                sequence += _sequenceConfig.NumberCharacters[Random.Range(0, _sequenceConfig.NumberCharacters.Count)];
+                sequence += sequenceConfig.Characters[Random.Range(0, sequenceConfig.Characters.Count)];
             }
 
-            return sequence;
-        }
-
-        private string GetLettersSequence()
-        {
-            string sequence = "";
-
-            for (int i = 0; i < _sequenceConfig.Length; i++)
-            {
-                sequence += _sequenceConfig.LetterCharacters[Random.Range(0, _sequenceConfig.LetterCharacters.Count)];
-            }
-            
             return sequence;
         }
     }

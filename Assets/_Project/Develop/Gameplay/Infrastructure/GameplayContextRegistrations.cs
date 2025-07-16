@@ -17,10 +17,10 @@ namespace Gameplay.Infrastructure
         {
             ResourcesLoader resourcesLoader = c.Resolve<ResourcesLoader>();
 
-            SequenceConfig sequenceConfig = resourcesLoader
-                .Load<SequenceConfig>("Configs/SequenceConfig");
+            SequenceMainConfig sequenceMainConfig = resourcesLoader
+                .Load<SequenceMainConfig>("Configs/SequenceMainConfig");
 
-            return new SequenceService(sequenceConfig);
+            return new SequenceService(sequenceMainConfig, resourcesLoader);
         }
 
         private static UserInputService CreateUserInputService(DIContainer c)
