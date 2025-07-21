@@ -44,19 +44,12 @@ namespace Meta.Infrastructure
             Debug.Log("Main menu scene");
             Debug.Log(_menuMessage);
 
-            _gameModeSelector = new GameModeSelector(
-                _container.Resolve<ICoroutinesPerformer>(), 
-                _container.Resolve<SceneSwitcherService>());
-
+            _gameModeSelector = _container.Resolve<GameModeSelector>();
             _gameModeSelector.Start();
 
-            _infoService = new InfoService(
-                _container.Resolve<CountersDataService>(), 
-                _container.Resolve<WalletService>());
+            _infoService = _container.Resolve<InfoService>();
 
-            _resetCountersService = new ResetCountersService(
-                _container.Resolve<CountersDataService>(), 
-                _container.Resolve<CostsCalculateService>());
+            _resetCountersService = _container.Resolve<ResetCountersService>();
         }
 
         private void Update()
