@@ -3,7 +3,7 @@ using TMPro;
 
 namespace UI.CommonViews
 {
-    public class TitleValueView : MonoBehaviour
+    public class TitleValueView : MonoBehaviour, IView
     {
         [SerializeField] private TMP_Text _title;
         [SerializeField] private TMP_Text _value;

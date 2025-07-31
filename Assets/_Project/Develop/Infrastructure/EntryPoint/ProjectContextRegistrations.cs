@@ -17,6 +17,7 @@ using UnityEngine;
 using Utilities.DataManagment.DataProviders;
 using Meta.Features.Counters;
 using Gameplay.Features.CostsManagment;
+using UI.Core;
 
 namespace Infrastructure.EntryPoint
 {
@@ -47,6 +48,13 @@ namespace Infrastructure.EntryPoint
             container.RegisterAsSingle(CreateCostsCalculateService);
 
             container.RegisterAsSingle(CreateProjectPresentersFactory);
+
+            container.RegisterAsSingle(CreateViewsFactory);
+        }
+
+        private static ViewsFactory CreateViewsFactory(DIContainer c)
+        {
+            return new ViewsFactory(c.Resolve<ResourcesLoader>());
         }
 
         private static ProjectPresentersFactory CreateProjectPresentersFactory(DIContainer c)
