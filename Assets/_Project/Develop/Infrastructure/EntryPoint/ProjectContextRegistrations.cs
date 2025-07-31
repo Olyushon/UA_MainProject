@@ -45,6 +45,13 @@ namespace Infrastructure.EntryPoint
             container.RegisterAsSingle(CreateCountersDataService).NonLazy();
 
             container.RegisterAsSingle(CreateCostsCalculateService);
+
+            container.RegisterAsSingle(CreateProjectPresentersFactory);
+        }
+
+        private static ProjectPresentersFactory CreateProjectPresentersFactory(DIContainer c)
+        {
+            return new ProjectPresentersFactory(c);
         }
 
         private static CostsCalculateService CreateCostsCalculateService(DIContainer c)
