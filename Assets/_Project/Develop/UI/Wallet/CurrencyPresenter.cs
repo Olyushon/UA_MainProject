@@ -2,12 +2,13 @@ using System;
 using Gameplay.Configs.Meta.Wallet;
 using Meta.Features.Wallet;
 using UI.CommonViews;
+using UI.Core;
 using UnityEngine;
 using Utilities.Reactive;
 
 namespace UI.Wallet
 {
-    public class CurrencyPresenter : MonoBehaviour
+    public class CurrencyPresenter : IPresenter
     {
         //Бизнес логика
         private readonly IReadOnlyVariable<int> _currency;
@@ -31,14 +32,16 @@ namespace UI.Wallet
             _view = view;
         }
 
-        public void Enable() {
+        public IconTextView View => _view;
+        
+        public void Initialize() {
             UpdateValue(_currency.Value);
             _view.SetIcon(_currencyIconsConfig.GetSpriteFor(_currencyType));
 
             _currencySubscription = _currency.Subscribe(OnCurrencyChanged);
         }
 
-        public void Disable() {
+        public void Dispose() {
             _currencySubscription?.Dispose();
         }
 

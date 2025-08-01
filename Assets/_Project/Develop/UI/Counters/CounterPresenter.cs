@@ -1,11 +1,12 @@
 using System;
 using Meta.Features.Counters;
 using UI.CommonViews;
+using UI.Core;
 using Utilities.Reactive;
 
 namespace UI.Counters
 {
-    public class CounterPresenter
+    public class CounterPresenter : IPresenter
     {
         //Бизнес логика
         private readonly IReadOnlyVariable<int> _counter;
@@ -26,14 +27,16 @@ namespace UI.Counters
             _view = view;
         }
 
-        public void Enable() {
+        public TitleValueView View => _view;
+
+        public void Initialize() {
             UpdateValue(_counter.Value);
             _view.SetTitle(_counterType.ToString());
 
             _counterSubscription = _counter.Subscribe(OnCounterChanged);
         }
 
-        public void Disable() {     
+        public void Dispose() {     
             _counterSubscription?.Dispose();
         }
 

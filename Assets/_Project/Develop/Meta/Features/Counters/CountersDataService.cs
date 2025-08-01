@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Utilities.DataManagment;
 using Utilities.DataManagment.DataProviders;
 using Utilities.Reactive;
@@ -18,6 +19,8 @@ namespace Meta.Features.Counters
             playerDataProvider.RegisterWriter(this);
             playerDataProvider.RegisterReader(this);
         }
+
+        public List<CounterType> AvailableCounters => _counters.Keys.ToList();
 
         public IReadOnlyVariable<int> GetCount(CounterType type) => _counters[type];
 

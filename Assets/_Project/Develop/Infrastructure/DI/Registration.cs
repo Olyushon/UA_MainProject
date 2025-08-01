@@ -24,6 +24,18 @@ namespace Infrastructure.DI
             return _cachedInstance;
         }
 
+        public void OnInitialize()
+        {
+            if (_cachedInstance != null && _cachedInstance is IInitializable initializable)
+                initializable.Initialize();
+        }
+
+        public void OnDispose()
+        {
+            if (_cachedInstance != null && _cachedInstance is IDisposable disposable)
+                disposable.Dispose();
+        }
+
         public void NonLazy() => IsNonLazy = true;
     }
 }

@@ -7,6 +7,11 @@ using Meta.Features.Counters;
 using Meta.Features.Wallet;
 using Gameplay.Features.ResetProgressManagment;
 using Gameplay.Features.CostsManagment;
+using UI.Wallet;
+using UI.CommonViews;
+using UnityEngine;
+using UI.Core;
+using UI.Counters;
 
 namespace Meta.Infrastructure
 {
@@ -19,6 +24,9 @@ namespace Meta.Infrastructure
             container.RegisterAsSingle(CreateGameModeSelector);
             container.RegisterAsSingle(CreateInfoService);
             container.RegisterAsSingle(CreateResetCountersService);
+
+            container.RegisterAsSingle(CreateWalletPresenter).NonLazy();
+            container.RegisterAsSingle(CreateCountersPresenter).NonLazy();
         }
 
         private static GameModeSelector CreateGameModeSelector(DIContainer c)
@@ -40,6 +48,24 @@ namespace Meta.Infrastructure
             return new ResetCountersService(
                 c.Resolve<CountersDataService>(), 
                 c.Resolve<CostsCalculateService>());
+        }
+
+        private static WalletPresenter CreateWalletPresenter(DIContainer c)
+        {
+            IconTextListView walletView = Object.FindObjectOfType<IconTextListView>();
+
+            WalletPresenter walletPresenter = c.Resolve<ProjectPresentersFactory>().CreateWalletPresenter(walletView);
+
+            return walletPresenter;
+        }
+
+        private static CountersPresenter CreateCountersPresenter(DIContainer c)
+        {
+            TitleValueListView countersView = Object.FindObjectOfType<TitleValueListView>();
+
+            CountersPresenter countersPresenter = c.Resolve<ProjectPresentersFactory>().CreateCountersPresenter(countersView);
+
+            return countersPresenter;
         }
     }
 }
