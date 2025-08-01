@@ -12,6 +12,8 @@ using UI.CommonViews;
 using UnityEngine;
 using UI.Core;
 using UI.Counters;
+using Utilities.AssetsManagment;
+using UI.MainMenu;
 
 namespace Meta.Infrastructure
 {
@@ -25,8 +27,21 @@ namespace Meta.Infrastructure
             container.RegisterAsSingle(CreateInfoService);
             container.RegisterAsSingle(CreateResetCountersService);
 
-            container.RegisterAsSingle(CreateWalletPresenter).NonLazy();
-            container.RegisterAsSingle(CreateCountersPresenter).NonLazy();
+            // container.RegisterAsSingle(CreateWalletPresenter).NonLazy();
+            // container.RegisterAsSingle(CreateCountersPresenter).NonLazy();
+
+            container.RegisterAsSingle(CreateMainMenuUIRoot).NonLazy();
+            container.RegisterAsSingle(CreateMainMenuPresentersFactory);
+            container.RegisterAsSingle(CreateMainMenuScreenPresenter).NonLazy();
+        }
+
+        private static MainMenuUIRoot CreateMainMenuUIRoot(DIContainer c)
+        {
+            ResourcesLoader resourcesLoader = c.Resolve<ResourcesLoader>();
+
+            MainMenuUIRoot mainMenuUIRootPrefab = resourcesLoader.Load<MainMenuUIRoot>("UI/MainMenu/MainMenuUIRoot");
+
+            return Object.Instantiate(mainMenuUIRootPrefab);
         }
 
         private static GameModeSelector CreateGameModeSelector(DIContainer c)
@@ -66,6 +81,26 @@ namespace Meta.Infrastructure
             CountersPresenter countersPresenter = c.Resolve<ProjectPresentersFactory>().CreateCountersPresenter(countersView);
 
             return countersPresenter;
+        }
+
+        private static MainMenuPresentersFactory CreateMainMenuPresentersFactory(DIContainer c)
+        {
+            return new MainMenuPresentersFactory(c);
+        }
+
+        private static MainMenuScreenPresenter CreateMainMenuScreenPresenter(DIContainer c)
+        {
+            MainMenuUIRoot uiRoot = c.Resolve<MainMenuUIRoot>();
+
+            MainMenuScreenView view = c
+                .Resolve<ViewsFactory>()
+                .Create<MainMenuScreenView>(ViewIDs.MainMenuScreen, uiRoot.HUDLayer);
+
+            MainMenuScreenPresenter presenter = c
+                .Resolve<MainMenuPresentersFactory>()
+                .CreateMainMenuScreen(view);
+
+            return presenter;
         }
     }
 }
