@@ -8,6 +8,8 @@ using UI.Counters;
 using Meta.Features.Counters;
 using Utilities.ConfigsManagment;
 using Gameplay.Features.CostsManagment;
+using Utilities.DataManagment.DataProviders;
+using Utilities.CoroutinesManagment;
 
 namespace UI.Core
 {
@@ -64,7 +66,9 @@ namespace UI.Core
             return new ResetterPresenter(
                 buttonView,
                 _container.Resolve<CostsCalculateService>(),
-                _container.Resolve<CountersDataService>());
+                _container.Resolve<CountersDataService>(),
+                _container.Resolve<PlayerDataProvider>(),
+                _container.Resolve<ICoroutinesPerformer>());
         }
     }
 }

@@ -3,6 +3,8 @@ using Meta.Features.Counters;
 using UI.CommonViews;
 using UI.Core;
 using UnityEngine;
+using Utilities.CoroutinesManagment;
+using Utilities.DataManagment.DataProviders;
 
 namespace UI.Counters
 {
@@ -13,16 +15,22 @@ namespace UI.Counters
 
         private readonly CostsCalculateService _costsCalculateService;
         private readonly CountersDataService _countersDataService;
+        private readonly PlayerDataProvider _playerDataProvider;
+        private readonly ICoroutinesPerformer _coroutinesPerformer;
         private readonly ButtonView _view;
 
         public ResetterPresenter(
             ButtonView view, 
             CostsCalculateService costsCalculateService, 
-            CountersDataService countersDataService)
+            CountersDataService countersDataService,
+            PlayerDataProvider playerDataProvider,
+            ICoroutinesPerformer coroutinesPerformer)
         {
             _view = view;
             _costsCalculateService = costsCalculateService;
             _countersDataService = countersDataService;
+            _playerDataProvider = playerDataProvider;
+            _coroutinesPerformer = coroutinesPerformer;
         }
 
         public void Initialize()
@@ -50,6 +58,9 @@ namespace UI.Counters
 
             _countersDataService.ResetCounters();
             Debug.Log("Counters resetted");
+
+            _coroutinesPerformer.StartPerform(_playerDataProvider.Save());
+            Debug.Log("Save");
         }
     }
 }
