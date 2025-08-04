@@ -6,19 +6,16 @@ using System.Collections;
 using UnityEngine;
 using Gameplay.Features.GameModeManagment;
 using Utilities.DataManagment.DataProviders;
-using Gameplay.Features.InfoManagment;
 
 namespace Meta.Infrastructure
 {
     public class MainMenuBootstrap : SceneBootstrap
     {
-        private readonly string _menuMessage = "Keycodes: I - counters info; W - wallet info; R - reset counters; S - save;"; // Temp
+        private readonly string _menuMessage = "Keycodes: S - save;"; // Temp
         private DIContainer _container;
         private GameModeSelector _gameModeSelector;
         private ICoroutinesPerformer _coroutinesPerformer;
         private PlayerDataProvider _playerDataProvider;
-        private InfoService _infoService;
-
 
         public override void ProcessRegistrations(DIContainer container, IInputSceneArgs sceneArgs = null)
         {
@@ -42,16 +39,11 @@ namespace Meta.Infrastructure
 
             _gameModeSelector = _container.Resolve<GameModeSelector>();
             _gameModeSelector.Start();
-
-            _infoService = _container.Resolve<InfoService>();
         }
 
         private void Update()
         {
             _gameModeSelector?.Update(Time.deltaTime);
-
-            _infoService?.Update(Time.deltaTime);
-
 
             if (Input.GetKeyDown(KeyCode.S))
             {

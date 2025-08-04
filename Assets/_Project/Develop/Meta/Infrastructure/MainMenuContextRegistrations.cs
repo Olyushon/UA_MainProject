@@ -2,9 +2,6 @@ using Infrastructure.DI;
 using Gameplay.Features.GameModeManagment;
 using Utilities.CoroutinesManagment;
 using Utilities.SceneManagment;
-using Gameplay.Features.InfoManagment;
-using Meta.Features.Counters;
-using Meta.Features.Wallet;
 using UnityEngine;
 using UI.Core;
 using Utilities.AssetsManagment;
@@ -19,7 +16,6 @@ namespace Meta.Infrastructure
             // Debug.Log("Процесс регистрации сервисов на сцене меню");
 
             container.RegisterAsSingle(CreateGameModeSelector);
-            container.RegisterAsSingle(CreateInfoService);
 
             container.RegisterAsSingle(CreateMainMenuUIRoot).NonLazy();
             container.RegisterAsSingle(CreateMainMenuPresentersFactory);
@@ -40,13 +36,6 @@ namespace Meta.Infrastructure
             return new GameModeSelector(
                 c.Resolve<ICoroutinesPerformer>(), 
                 c.Resolve<SceneSwitcherService>());
-        }
-
-        private static InfoService CreateInfoService(DIContainer c)
-        {
-            return new InfoService(
-                c.Resolve<CountersDataService>(), 
-                c.Resolve<WalletService>());
         }
 
         private static MainMenuPresentersFactory CreateMainMenuPresentersFactory(DIContainer c)
