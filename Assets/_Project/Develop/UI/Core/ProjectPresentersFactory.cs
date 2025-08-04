@@ -7,6 +7,7 @@ using Gameplay.Configs.Meta.Wallet;
 using UI.Counters;
 using Meta.Features.Counters;
 using Utilities.ConfigsManagment;
+using Gameplay.Features.CostsManagment;
 
 namespace UI.Core
 {
@@ -56,6 +57,14 @@ namespace UI.Core
                 view,
                 this,
                 _container.Resolve<ViewsFactory>());
+        }
+
+        public ResetterPresenter CreateResetterPresenter(ButtonView buttonView) 
+        {
+            return new ResetterPresenter(
+                buttonView,
+                _container.Resolve<CostsCalculateService>(),
+                _container.Resolve<CountersDataService>());
         }
     }
 }

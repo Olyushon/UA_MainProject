@@ -7,7 +7,6 @@ using UnityEngine;
 using Gameplay.Features.GameModeManagment;
 using Utilities.DataManagment.DataProviders;
 using Gameplay.Features.InfoManagment;
-using Gameplay.Features.ResetProgressManagment;
 
 namespace Meta.Infrastructure
 {
@@ -19,7 +18,6 @@ namespace Meta.Infrastructure
         private ICoroutinesPerformer _coroutinesPerformer;
         private PlayerDataProvider _playerDataProvider;
         private InfoService _infoService;
-        private ResetCountersService _resetCountersService;
 
 
         public override void ProcessRegistrations(DIContainer container, IInputSceneArgs sceneArgs = null)
@@ -46,7 +44,6 @@ namespace Meta.Infrastructure
             _gameModeSelector.Start();
 
             _infoService = _container.Resolve<InfoService>();
-            _resetCountersService = _container.Resolve<ResetCountersService>();
         }
 
         private void Update()
@@ -55,7 +52,6 @@ namespace Meta.Infrastructure
 
             _infoService?.Update(Time.deltaTime);
 
-            _resetCountersService?.Update(Time.deltaTime);
 
             if (Input.GetKeyDown(KeyCode.S))
             {

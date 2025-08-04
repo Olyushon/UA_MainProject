@@ -17,6 +17,9 @@ namespace Gameplay.Features.CostsManagment
             _costsConfig = configsProviderService.GetConfig<CostsConfig>();
         }
 
+        public CurrencyType CurrencyType => _currencyType;
+        public int ResettingCost => _costsConfig.ResetCost;
+
         public void AddWinCost()
         {
             _walletService.Add(_currencyType, _costsConfig.WinCost);

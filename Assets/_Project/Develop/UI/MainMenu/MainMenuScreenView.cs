@@ -7,5 +7,6 @@ namespace UI.MainMenu
     {
         [field: SerializeField] public IconTextListView WalletView { get; private set; }
         [field: SerializeField] public TitleValueListView CountersView { get; private set; }
+        [field: SerializeField] public ButtonView ResetButtonView { get; private set; }
     }
 }

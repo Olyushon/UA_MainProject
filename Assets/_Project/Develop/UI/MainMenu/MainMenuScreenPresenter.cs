@@ -25,6 +25,7 @@ namespace UI.MainMenu
         {
             CreateWallet();
             CreateCounters();
+            CreateResetButton();
 
             foreach (IPresenter presenter in _childPresenters)
                 presenter.Initialize();
@@ -50,6 +51,13 @@ namespace UI.MainMenu
             CountersPresenter countersPresenter = _projectPresentersFactory.CreateCountersPresenter(_screen.CountersView);
 
             _childPresenters.Add(countersPresenter);
+        }
+
+        private void CreateResetButton()
+        {
+            ResetterPresenter resetterPresenter = _projectPresentersFactory.CreateResetterPresenter(_screen.ResetButtonView);
+        
+            _childPresenters.Add(resetterPresenter);
         }
     }
 }
