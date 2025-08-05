@@ -10,15 +10,18 @@ namespace UI.MainMenu
         private readonly MainMenuScreenView _screen;
 
         private readonly ProjectPresentersFactory _projectPresentersFactory;
+        private readonly MainMenuPresentersFactory _mainMenuPresentersFactory;
 
         private readonly List<IPresenter> _childPresenters = new();
 
         public MainMenuScreenPresenter(
             MainMenuScreenView screen, 
-            ProjectPresentersFactory projectPresentersFactory)
+            ProjectPresentersFactory projectPresentersFactory,
+            MainMenuPresentersFactory mainMenuPresentersFactory)
         {
             _screen = screen;
             _projectPresentersFactory = projectPresentersFactory;
+            _mainMenuPresentersFactory = mainMenuPresentersFactory; 
         }
 
         public void Initialize()
@@ -55,7 +58,7 @@ namespace UI.MainMenu
 
         private void CreateResetButton()
         {
-            ResetterPresenter resetterPresenter = _projectPresentersFactory.CreateResetterPresenter(_screen.ResetButtonView);
+            ResetterPresenter resetterPresenter = _mainMenuPresentersFactory.CreateResetterPresenter(_screen.ResetButtonView);
         
             _childPresenters.Add(resetterPresenter);
         }
