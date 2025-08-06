@@ -47,15 +47,13 @@ namespace Gameplay.Infrastructure
                 _container.Resolve<CostsCalculateService>());
 
             yield return _gameplayCycle.Prepare();
- 
-            yield return _gameplayCycle.Launch();
         }
 
         public override void Run()
         {
             Debug.Log("Gameplay scene");
 
-            // _gameplayCycle.Launch();
+            _gameplayCycle.Launch();
         }
 
         private void Update()

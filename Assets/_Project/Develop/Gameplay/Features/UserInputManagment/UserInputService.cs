@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Utilities.Reactive;
 
 namespace Gameplay.Features.UserInputManagment
 {
@@ -8,11 +9,13 @@ namespace Gameplay.Features.UserInputManagment
         public event Action<string> OnSequenceInputReceived;
 
         private KeyCode _enterKey;
-        private string _currentSequence = "";
+        private ReactiveVariable<string> _currentSequence = new ReactiveVariable<string>("");
         private bool _isActive = false;
 
         public UserInputService() {
         }
+
+        public IReadOnlyVariable<string> CurrentSequence => _currentSequence;
 
         public void On() {
             _isActive = true;
@@ -31,21 +34,21 @@ namespace Gameplay.Features.UserInputManagment
                 return;
 
             if (Input.anyKeyDown) {
-                if (Input.GetKeyDown(_enterKey) && string.IsNullOrEmpty(_currentSequence) == false) {
-                    OnSequenceInputReceived?.Invoke(_currentSequence);
-                    ResetSequence();
+                if (Input.GetKeyDown(_enterKey) && string.IsNullOrEmpty(_currentSequence.Value) == false) {
+                    OnSequenceInputReceived?.Invoke(_currentSequence.Value);
+                    // ResetSequence();
                 }
 
                 string input = Input.inputString;
 
                 if (string.IsNullOrEmpty(input) == false) {
-                    _currentSequence += input;
+                    _currentSequence.Value += input;
                 }
             }
         }
 
         public void ResetSequence() {
-            _currentSequence = "";
+            _currentSequence.Value = "";
         }
     }
 }

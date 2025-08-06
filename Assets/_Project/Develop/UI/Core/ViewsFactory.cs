@@ -15,7 +15,8 @@ namespace UI.Core
         {
             {ViewIDs.CurrencyView, "UI/Wallet/CurrencyView"},
             {ViewIDs.CounterView, "UI/Counters/CounterView"},
-            {ViewIDs.MainMenuScreen, "UI/MainMenu/MainMenuScreenView"}
+            {ViewIDs.MainMenuScreen, "UI/MainMenu/MainMenuScreenView"},
+            {ViewIDs.GameplayScreen, "UI/Gameplay/GameplayScreenView"}
         };
 
         public ViewsFactory(ResourcesLoader resourcesLoader)

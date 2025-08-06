@@ -1,5 +1,4 @@
 using System.Collections;
-using Infrastructure.DI;
 using UnityEngine;
 using Utilities.CoroutinesManagment;
 using Utilities.SceneManagment;
@@ -7,6 +6,7 @@ using Gameplay.Features.SequenceManagment;
 using Gameplay.Features.UserInputManagment;
 using Meta.Features.Counters;
 using Gameplay.Features.CostsManagment;
+using Unity.VisualScripting;
 
 namespace Gameplay.Infrastructure
 {
@@ -26,9 +26,6 @@ namespace Gameplay.Infrastructure
         private ICoroutinesPerformer _coroutinesPerformer;
         private CountersDataService _countersDataService;
         private CostsCalculateService _costsCalculateService;
-
-        private string _sequence;
-        private string _sceneGoTo;
 
         public GameplayCycle(
             GameplayInputArgs inputArgs,
@@ -50,25 +47,24 @@ namespace Gameplay.Infrastructure
 
         public IEnumerator Prepare()
         {
-            _sequence = _sequenceService.GetSequence(_inputArgs.SequenceType);
+            _sequenceService.GenerateSequenceByType(_inputArgs.SequenceType);
             _userInputService.SetEnterKey(_sequenceService.GetEnterKey());
             _userInputService.OnSequenceInputReceived += HandleUserInput;
 
-            yield return new WaitForSeconds(0.5f);
+            // yield return new WaitForSeconds(6f);
+            yield break;
         }
 
-        public IEnumerator Launch()
+        public void Launch()
         {
-            Debug.LogFormat(_startMessage, _sequence, _sequenceService.GetEnterKey());
+            Debug.LogFormat(_startMessage, _sequenceService.Sequence.Value, _sequenceService.GetEnterKey());
 
             _userInputService.On();
-            
-            yield return new WaitForSeconds(0.5f);
         }
 
         private void HandleUserInput(string userInput)
         {
-            if (userInput == _sequence)
+            if (userInput == _sequenceService.Sequence.Value)
                 HandleWin();
             else
                 HandleLose(userInput);
