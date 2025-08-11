@@ -72,7 +72,7 @@ namespace Gameplay.Infrastructure
 
         private void HandleEnd() {
             _userInputService.Off();
-            _userInputService.ResetSequence();
+            // _userInputService.ResetSequence();
         }
 
         private void HandleWin() {

@@ -23,10 +23,7 @@ namespace Gameplay.Features.GameModeManagment
             _sceneSwitcherService = sceneSwitcherService;
         }
 
-        public void Start()
-        {
-            Debug.LogFormat(_startMessage, (char)_digitModeKey, (char)_lettersModeKey);
-        }
+        public string StartMessage => string.Format(_startMessage, (char)_digitModeKey, (char)_lettersModeKey);
 
         public void Update(float deltaTime)
         {

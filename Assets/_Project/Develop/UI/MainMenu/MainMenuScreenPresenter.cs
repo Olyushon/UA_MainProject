@@ -29,6 +29,7 @@ namespace UI.MainMenu
             CreateWallet();
             CreateCounters();
             CreateResetButton();
+            CreateSelectModeText();
 
             foreach (IPresenter presenter in _childPresenters)
                 presenter.Initialize();
@@ -61,6 +62,13 @@ namespace UI.MainMenu
             ResetterPresenter resetterPresenter = _mainMenuPresentersFactory.CreateResetterPresenter(_screen.ResetButtonView);
         
             _childPresenters.Add(resetterPresenter);
+        }
+
+        private void CreateSelectModeText()
+        {
+            SelectModeTextPresenter selectModeTextPresenter = _mainMenuPresentersFactory.CreateSelectModeTextPresenter(_screen.SelectModeTextView);
+
+            _childPresenters.Add(selectModeTextPresenter);
         }
     }
 }

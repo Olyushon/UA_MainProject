@@ -1,4 +1,5 @@
 using Gameplay.Features.CostsManagment;
+using Gameplay.Features.GameModeManagment;
 using Infrastructure.DI;
 using Meta.Features.Counters;
 using UI.CommonViews;
@@ -34,6 +35,11 @@ namespace UI.MainMenu
                 _container.Resolve<CountersDataService>(),
                 _container.Resolve<PlayerDataProvider>(),
                 _container.Resolve<ICoroutinesPerformer>());
+        }
+
+        public SelectModeTextPresenter CreateSelectModeTextPresenter(TextView textView)
+        {
+            return new SelectModeTextPresenter(textView, _container.Resolve<GameModeSelector>());
         }
     }
 }

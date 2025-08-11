@@ -13,5 +13,9 @@ namespace UI.CommonViews
         public void SetTitle(string title) => _button.GetComponentInChildren<TextMeshProUGUI>().text = title;
 
         public void SetOnClick(Action onClick) => _button.onClick.AddListener(() => onClick?.Invoke());
+
+        private void OnDisable() {
+            _button.onClick.RemoveAllListeners();
+        }
     }
 }

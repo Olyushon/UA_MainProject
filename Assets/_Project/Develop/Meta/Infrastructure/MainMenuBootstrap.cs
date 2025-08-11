@@ -38,7 +38,6 @@ namespace Meta.Infrastructure
             Debug.Log(_menuMessage);
 
             _gameModeSelector = _container.Resolve<GameModeSelector>();
-            _gameModeSelector.Start();
         }
 
         private void Update()

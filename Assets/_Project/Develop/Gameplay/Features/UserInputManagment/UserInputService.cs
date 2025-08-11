@@ -18,6 +18,7 @@ namespace Gameplay.Features.UserInputManagment
         public IReadOnlyVariable<string> CurrentSequence => _currentSequence;
 
         public void On() {
+            ResetSequence();
             _isActive = true;
         }
 
