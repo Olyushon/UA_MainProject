@@ -7,6 +7,7 @@ using Gameplay.Features.UserInputManagment;
 using Meta.Features.Counters;
 using Gameplay.Features.CostsManagment;
 using Unity.VisualScripting;
+using Utilities.DataManagment.DataProviders;
 
 namespace Gameplay.Infrastructure
 {
@@ -26,6 +27,7 @@ namespace Gameplay.Infrastructure
         private ICoroutinesPerformer _coroutinesPerformer;
         private CountersDataService _countersDataService;
         private CostsCalculateService _costsCalculateService;
+        private PlayerDataProvider _playerDataProvider;
 
         public GameplayCycle(
             GameplayInputArgs inputArgs,
@@ -34,7 +36,8 @@ namespace Gameplay.Infrastructure
             SceneSwitcherService sceneSwitcherService, 
             ICoroutinesPerformer coroutinesPerformer, 
             CountersDataService countersDataService,
-            CostsCalculateService costsCalculateService)
+            CostsCalculateService costsCalculateService,
+            PlayerDataProvider playerDataProvider)
         {
             _inputArgs = inputArgs;
             _sequenceService = sequenceService;
@@ -43,6 +46,7 @@ namespace Gameplay.Infrastructure
             _coroutinesPerformer = coroutinesPerformer;
             _countersDataService = countersDataService;
             _costsCalculateService = costsCalculateService;
+            _playerDataProvider = playerDataProvider;
         }
 
         public IEnumerator Prepare()
@@ -81,6 +85,9 @@ namespace Gameplay.Infrastructure
             _countersDataService.IncreaseCounter(CounterType.Win);
             _costsCalculateService.AddWinCost();
 
+            _coroutinesPerformer.StartPerform(_playerDataProvider.Save());
+            Debug.Log("Save");
+
             Debug.Log(_winMessage);
             Debug.LogFormat(_restartMessage, _restartKey);
 
@@ -92,6 +99,9 @@ namespace Gameplay.Infrastructure
 
             _countersDataService.IncreaseCounter(CounterType.Lose);
             _costsCalculateService.TrySpendLoseCost();
+            
+            _coroutinesPerformer.StartPerform(_playerDataProvider.Save());
+            Debug.Log("Save");
 
             Debug.LogFormat(_loseMessage, userInput);
             Debug.LogFormat(_restartMessage, _restartKey);
