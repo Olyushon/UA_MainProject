@@ -18,6 +18,7 @@ using Utilities.DataManagment.DataProviders;
 using Meta.Features.Counters;
 using Gameplay.Features.CostsManagment;
 using UI.Core;
+using Gameplay.Infrastructure;
 
 namespace Infrastructure.EntryPoint
 {
@@ -50,6 +51,13 @@ namespace Infrastructure.EntryPoint
             container.RegisterAsSingle(CreateProjectPresentersFactory);
 
             container.RegisterAsSingle(CreateViewsFactory);
+
+            container.RegisterAsSingle(CreateGameResultService);
+        }
+
+        private static GameResultService CreateGameResultService(DIContainer c)
+        {
+            return new GameResultService();
         }
 
         private static ViewsFactory CreateViewsFactory(DIContainer c)

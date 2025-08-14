@@ -7,6 +7,10 @@ using Gameplay.Configs.Meta.Wallet;
 using UI.Counters;
 using Meta.Features.Counters;
 using Utilities.ConfigsManagment;
+using UI.Gameplay;
+using Gameplay.Infrastructure;
+using Utilities.CoroutinesManagment;
+using Utilities.SceneManagment;
 
 namespace UI.Core
 {
@@ -56,6 +60,15 @@ namespace UI.Core
                 view,
                 this,
                 _container.Resolve<ViewsFactory>());
+        }
+
+        public ResultPopupPresenter CreateResultPopupPresenter(ResultPopupView view)
+        {
+            return new ResultPopupPresenter(
+                view,
+                _container.Resolve<GameResultService>(),
+                _container.Resolve<ICoroutinesPerformer>(),
+                _container.Resolve<SceneSwitcherService>());
         }
     }
 }
