@@ -1,6 +1,5 @@
 using Gameplay.Infrastructure;
 using UI.Core;
-using UI.Gameplay;
 using Utilities.CoroutinesManagment;
 using Utilities.SceneManagment;
 
@@ -18,6 +17,7 @@ namespace UI.Gameplay
             GameResultService gameResultService,
             ICoroutinesPerformer coroutinesPerformer, 
             SceneSwitcherService sceneSwitcherService)
+            : base(coroutinesPerformer)
         {
             _view = view;
             _gameResultService = gameResultService;

@@ -1,5 +1,7 @@
 using System;
+using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UI.Core
 {
@@ -8,6 +10,10 @@ namespace UI.Core
         public event Action CloseRequest;
 
         [SerializeField] private CanvasGroup _mainGroup;
+        [SerializeField] private Image _aniclicker;
+        [SerializeField] private Transform _body;
+
+        private Tween _currentAnimation;
 
         private void Awake()
         {
@@ -16,24 +22,42 @@ namespace UI.Core
 
         public void OnCloseButtonClicked() => CloseRequest?.Invoke();
 
-        public void Show()
+        public Tween Show()
         {
+            KillCurrentAnimation();
+
             OnPreShow();
 
-            //тут потом появятся анимации
             _mainGroup.alpha = 1;
 
-            OnPostShow();
+            Sequence animation = DOTween.Sequence();
+
+            animation
+                .Append(_aniclicker.material
+                    .DOFade(0.75f, 0.2f)
+                    .From(0))
+                .Join(_body
+                    .DOScale(1, 0.5f)
+                    .From(0)
+                    .SetEase(Ease.OutBack));
+
+            animation.OnComplete(OnPostShow);
+
+            return _currentAnimation = animation;
+            // return _currentAnimation;
         }
 
-        public void Hide()
+        public Tween Hide()
         {
+            KillCurrentAnimation();
+
             OnPreHide();
 
-            //тут потом появятся анимации
             _mainGroup.alpha = 0;
 
             OnPostHide();
+
+            return _currentAnimation;
         }
 
         protected virtual void OnPostShow() { }
@@ -43,5 +67,13 @@ namespace UI.Core
         protected virtual void OnPostHide() { }
 
         protected virtual void OnPreHide() { }
+
+        private void OnDestroy() => KillCurrentAnimation();
+
+        private void KillCurrentAnimation()
+        {
+            if (_currentAnimation != null)
+                _currentAnimation.Kill();
+        }
     }
 }

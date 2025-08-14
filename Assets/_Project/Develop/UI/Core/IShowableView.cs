@@ -1,11 +1,12 @@
+using DG.Tweening;
 using UI.CommonViews;
 
 namespace UI.Core
 {
     public interface IShowableView : IView
     {
-        void Hide();
+        Tween Hide();
 
-        void Show();
+        Tween Show();
     }
 }
