@@ -1,5 +1,6 @@
 using UnityEngine;
 using Utilities.AssetsManagment;
+using Utilities.Reactive;
 using Random = UnityEngine.Random;
 
 namespace Gameplay.Features.SequenceManagment
@@ -9,18 +10,19 @@ namespace Gameplay.Features.SequenceManagment
         private readonly SequenceMainConfig _sequenceMainConfig;
         private readonly ResourcesLoader _resourcesLoader;
 
+        private ReactiveVariable<string> _sequence = new ReactiveVariable<string>("");
+
         public SequenceService(SequenceMainConfig sequenceMainConfig, ResourcesLoader resourcesLoader)
         {
             _sequenceMainConfig = sequenceMainConfig;
             _resourcesLoader = resourcesLoader;
         }
 
-        public KeyCode GetEnterKey()
-        {
-            return _sequenceMainConfig.EnterKey;
-        }
+        public IReadOnlyVariable<string> Sequence => _sequence;
 
-        public string GetSequence(SequenceType sequenceType)
+        public KeyCode GetEnterKey() => _sequenceMainConfig.EnterKey;
+
+        public IReadOnlyVariable<string> GenerateSequenceByType(SequenceType sequenceType)
         {
             SequenceConfig sequenceConfig;
 
@@ -28,17 +30,21 @@ namespace Gameplay.Features.SequenceManagment
             {
                 case SequenceType.Numbers:
                     sequenceConfig = _resourcesLoader.Load<SequenceConfig>("Configs/NumbersSequenceConfig");
-                    return GetSequence(sequenceConfig);
+                    _sequence.Value = GenerateSequence(sequenceConfig);
+                    break;
                 case SequenceType.Letters:
                     sequenceConfig = _resourcesLoader.Load<SequenceConfig>("Configs/LettersSequenceConfig");
-                    return GetSequence(sequenceConfig);
+                    _sequence.Value = GenerateSequence(sequenceConfig);
+                    break;
                 default:
                     Debug.LogError("Invalid sequence type");
-                    return null;
+                    break;
             }
+
+            return _sequence;
         }
 
-        public string GetSequence(SequenceConfig sequenceConfig)
+        private string GenerateSequence(SequenceConfig sequenceConfig)
         {
             string sequence = "";
 
@@ -48,6 +54,10 @@ namespace Gameplay.Features.SequenceManagment
             }
 
             return sequence;
+        }
+
+        public void ResetSequence() {
+            _sequence.Value = "";
         }
     }
 }

@@ -2,6 +2,9 @@ using Infrastructure.DI;
 using Utilities.AssetsManagment;
 using Gameplay.Features.SequenceManagment;
 using Gameplay.Features.UserInputManagment;
+using UI.Gameplay;
+using UnityEngine;
+using UI.Core;
 
 namespace Gameplay.Infrastructure
 {
@@ -9,9 +12,52 @@ namespace Gameplay.Infrastructure
     {
         public static void Process(DIContainer container, GameplayInputArgs args)
         {
-            container.RegisterAsSingle(CreateSequenceService);
+            container.RegisterAsSingle(CreateSequenceService).NonLazy();
             container.RegisterAsSingle(CreateUserInputService);
+
+            container.RegisterAsSingle(CreateGameplayUIRoot).NonLazy();
+            container.RegisterAsSingle(CreateGameplayPresentersFactory);
+            container.RegisterAsSingle(CreateGameplayScreenPresenter).NonLazy();
+
+            container.RegisterAsSingle(CreateGameplayPopupService);
         }
+
+        private static GameplayPopupService CreateGameplayPopupService(DIContainer c)
+        {
+            return new GameplayPopupService(
+                c.Resolve<ViewsFactory>(),
+                c.Resolve<ProjectPresentersFactory>(),
+                c.Resolve<GameplayUIRoot>());
+        }
+
+        private static GameplayUIRoot CreateGameplayUIRoot(DIContainer c)
+        {
+            ResourcesLoader resourcesLoader = c.Resolve<ResourcesLoader>();
+
+            GameplayUIRoot gameplayUIRootPrefab = resourcesLoader.Load<GameplayUIRoot>("UI/Gameplay/GameplayUIRoot");
+
+            return Object.Instantiate(gameplayUIRootPrefab);
+        }
+
+        private static GameplayPresentersFactory CreateGameplayPresentersFactory(DIContainer c)
+        {
+            return new GameplayPresentersFactory(c);
+        }
+
+        private static GameplayScreenPresenter CreateGameplayScreenPresenter(DIContainer c)
+        {
+            GameplayUIRoot uiRoot = c.Resolve<GameplayUIRoot>();
+
+            GameplayScreenView view = c
+                .Resolve<ViewsFactory>()
+                .Create<GameplayScreenView>(ViewIDs.GameplayScreen, uiRoot.HUDLayer);
+
+            GameplayScreenPresenter presenter = c
+                .Resolve<GameplayPresentersFactory>()
+                .CreateGameplayScreen(view);
+
+            return presenter;
+        }   
 
         private static SequenceService CreateSequenceService(DIContainer c)
         {

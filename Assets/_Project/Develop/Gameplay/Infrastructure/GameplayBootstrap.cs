@@ -9,6 +9,8 @@ using UnityEngine;
 using Gameplay.Features.UserInputManagment;
 using Meta.Features.Counters;
 using Gameplay.Features.CostsManagment;
+using Utilities.DataManagment.DataProviders;
+using UI.Gameplay;
 
 namespace Gameplay.Infrastructure
 {
@@ -41,21 +43,21 @@ namespace Gameplay.Infrastructure
                 _inputArgs,
                 _container.Resolve<SequenceService>(),
                 _userInputService,
-                _container.Resolve<SceneSwitcherService>(),
                 _container.Resolve<ICoroutinesPerformer>(),
                 _container.Resolve<CountersDataService>(),
-                _container.Resolve<CostsCalculateService>());
+                _container.Resolve<CostsCalculateService>(),
+                _container.Resolve<PlayerDataProvider>(),
+                _container.Resolve<GameResultService>(),
+                _container.Resolve<GameplayPopupService>());
 
             yield return _gameplayCycle.Prepare();
- 
-            yield return _gameplayCycle.Launch();
         }
 
         public override void Run()
         {
             Debug.Log("Gameplay scene");
 
-            // _gameplayCycle.Launch();
+            _gameplayCycle.Launch();
         }
 
         private void Update()
