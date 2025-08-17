@@ -33,7 +33,7 @@ namespace UI.Core
             Sequence animation = DOTween.Sequence();
 
             animation
-                .Append(_aniclicker.material
+                .Append(_aniclicker
                     .DOFade(0.75f, 0.2f)
                     .From(0))
                 .Join(_body
