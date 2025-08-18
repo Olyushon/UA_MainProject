@@ -22,6 +22,8 @@ namespace Gameplay.Infrastructure
         private GameplayCycle _gameplayCycle;
         private UserInputService _userInputService;
 
+        [SerializeField] private TestGameplay _testGameplay;
+
         public override void ProcessRegistrations(DIContainer container, IInputSceneArgs sceneArgs = null)
         {
             _container = container;
@@ -50,6 +52,8 @@ namespace Gameplay.Infrastructure
                 _container.Resolve<GameResultService>(),
                 _container.Resolve<GameplayPopupService>());
 
+            _testGameplay.Initialize(_container);
+
             yield return _gameplayCycle.Prepare();
         }
 
@@ -58,6 +62,8 @@ namespace Gameplay.Infrastructure
             Debug.Log("Gameplay scene");
 
             _gameplayCycle.Launch();
+
+            _testGameplay.Run();
         }
 
         private void Update()

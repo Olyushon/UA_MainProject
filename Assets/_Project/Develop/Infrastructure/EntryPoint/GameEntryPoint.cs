@@ -6,6 +6,8 @@ using Utilities.LoadingScreen;
 using Utilities.CoroutinesManagment;
 using Utilities.ConfigsManagment;
 using Utilities.DataManagment.DataProviders;
+using Gameplay.Infrastructure;
+using Gameplay.Features.SequenceManagment;
 
 namespace Infrastructure.EntryPoint
 {
@@ -53,7 +55,8 @@ namespace Infrastructure.EntryPoint
 
             loadingScreen.Hide();
 
-            yield return sceneSwitcherService.ProcessSwitchTo(Scenes.MainMenu);
+            // yield return sceneSwitcherService.ProcessSwitchTo(Scenes.MainMenu);
+            yield return sceneSwitcherService.ProcessSwitchTo(Scenes.Gameplay, new GameplayInputArgs(SequenceType.Numbers));
         }
     }
 }
