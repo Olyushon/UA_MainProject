@@ -1,16 +1,17 @@
 using Gameplay.EntitiesCore;
 using UnityEngine;
+using Utilities.Reactive;
 
 namespace Gameplay.Features.MovementFeature
 {
     public class MoveDirection: IEntityComponent
     {
-        public Vector3 Value;
+        public ReactiveVariable<Vector3> Value;
     }
 
     public class MoveSpeed: IEntityComponent
     {
-        public float Value;
+        public ReactiveVariable<float> Value;
     }
 
     public class RigidbodyComponent: IEntityComponent
