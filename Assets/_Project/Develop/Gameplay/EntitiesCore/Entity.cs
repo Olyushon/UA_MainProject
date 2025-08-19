@@ -1,11 +1,17 @@
 using System;
 using System.Collections.Generic;
+using Gameplay.EntitiesCore.Systems;
 
 namespace Gameplay.EntitiesCore
 {
     public class Entity
     {
         private readonly Dictionary<Type, IEntityComponent> _components = new();
+
+        private readonly List<IEntitySystem> _systems = new();
+        private readonly List<IInitializableSystem> _initializableSystems = new();
+        private readonly List<IUpdatableSystem> _updatableSystems = new();
+        private readonly List<IDisposableSystem> _disposableSystems = new();
 
         public Entity AddComponent<TComponent>(TComponent component) where TComponent : class, IEntityComponent {
             _components.Add(typeof(TComponent), component);
@@ -34,5 +40,23 @@ namespace Gameplay.EntitiesCore
             return component;
         }
 
+        public Entity AddSystem(IEntitySystem system)
+        {
+            if (_systems.Contains(system))
+                throw new InvalidOperationException($"System {system.GetType().ToString()} already added");
+
+            _systems.Add(system);
+
+            if (system is IInitializableSystem initializable)
+                _initializableSystems.Add(initializable);
+
+            if (system is IUpdatableSystem updatable)
+                _updatableSystems.Add(updatable);
+
+            if (system is IDisposableSystem disposable)
+                _disposableSystems.Add(disposable);
+
+            return this;
+        }
     }
 }
