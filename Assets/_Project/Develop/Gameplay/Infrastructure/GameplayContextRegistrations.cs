@@ -6,6 +6,7 @@ using UI.Gameplay;
 using UnityEngine;
 using UI.Core;
 using Gameplay.EntitiesCore;
+using Gameplay.EntitiesCore.Mono;
 
 namespace Gameplay.Infrastructure
 {
@@ -24,6 +25,15 @@ namespace Gameplay.Infrastructure
 
             container.RegisterAsSingle(CreateEntitiesFactory);
             container.RegisterAsSingle(CreateEntitiesLifeContext);
+
+            container.RegisterAsSingle(CreateMonoEntitiesFactory).NonLazy();
+        }
+
+        private static MonoEntitiesFactory CreateMonoEntitiesFactory(DIContainer c)
+        {
+            return new MonoEntitiesFactory(
+                c.Resolve<ResourcesLoader>(),
+                c.Resolve<EntitiesLifeContext>());
         }
 
         private static EntitiesLifeContext CreateEntitiesLifeContext(DIContainer c)

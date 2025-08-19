@@ -20,7 +20,7 @@ namespace Gameplay
         public void Run() {
             _isRunning = true;
 
-            Entity testEntity = _entitiesFactory.CreateTestEntity();
+            Entity testEntity = _entitiesFactory.CreateTestEntity(Vector3.zero);
 
             Debug.Log("Направление движения: " + testEntity.GetComponent<MoveDirection>().Value.Value.ToString());
             Debug.Log("Скорость движения: " + testEntity.GetComponent<MoveSpeed>().Value.Value.ToString());
