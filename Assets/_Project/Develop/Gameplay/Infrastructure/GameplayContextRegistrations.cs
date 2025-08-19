@@ -5,6 +5,7 @@ using Gameplay.Features.UserInputManagment;
 using UI.Gameplay;
 using UnityEngine;
 using UI.Core;
+using Gameplay.EntitiesCore;
 
 namespace Gameplay.Infrastructure
 {
@@ -20,6 +21,13 @@ namespace Gameplay.Infrastructure
             container.RegisterAsSingle(CreateGameplayScreenPresenter).NonLazy();
 
             container.RegisterAsSingle(CreateGameplayPopupService);
+
+            container.RegisterAsSingle(CreateEntitiesFactory);
+        }
+
+        private static EntitiesFactory CreateEntitiesFactory(DIContainer c)
+        {
+            return new EntitiesFactory(c);
         }
 
         private static GameplayPopupService CreateGameplayPopupService(DIContainer c)
