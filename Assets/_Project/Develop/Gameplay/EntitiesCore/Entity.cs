@@ -4,7 +4,7 @@ using Gameplay.EntitiesCore.Systems;
 
 namespace Gameplay.EntitiesCore
 {
-    public class Entity
+    public class Entity : IDisposable
     {
         private readonly Dictionary<Type, IEntityComponent> _components = new();
 
@@ -12,6 +12,30 @@ namespace Gameplay.EntitiesCore
         private readonly List<IInitializableSystem> _initializableSystems = new();
         private readonly List<IUpdatableSystem> _updatableSystems = new();
         private readonly List<IDisposableSystem> _disposableSystems = new();
+
+        private bool _isInitialized = false;
+
+        public void Initialize() {
+            foreach (IInitializableSystem system in _initializableSystems)
+                system.OnInitialize(this);
+
+            _isInitialized = true;
+        }
+
+        public void OnUpdate(float deltaTime) {
+            if (_isInitialized == false)
+                return;
+
+            foreach (IUpdatableSystem system in _updatableSystems)
+                system.OnUpdate(deltaTime);
+        }
+
+        public void Dispose() {
+            foreach (IDisposableSystem system in _disposableSystems)
+                system.OnDispose();
+
+            _isInitialized = false;
+        }
 
         public Entity AddComponent<TComponent>(TComponent component) where TComponent : class, IEntityComponent {
             _components.Add(typeof(TComponent), component);
@@ -47,8 +71,12 @@ namespace Gameplay.EntitiesCore
 
             _systems.Add(system);
 
-            if (system is IInitializableSystem initializable)
+            if (system is IInitializableSystem initializable) {
                 _initializableSystems.Add(initializable);
+
+                if (_isInitialized)
+                    initializable.OnInitialize(this);
+            }
 
             if (system is IUpdatableSystem updatable)
                 _updatableSystems.Add(updatable);
