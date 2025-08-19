@@ -11,6 +11,7 @@ using Meta.Features.Counters;
 using Gameplay.Features.CostsManagment;
 using Utilities.DataManagment.DataProviders;
 using UI.Gameplay;
+using Gameplay.EntitiesCore;
 
 namespace Gameplay.Infrastructure
 {
@@ -23,6 +24,8 @@ namespace Gameplay.Infrastructure
         private UserInputService _userInputService;
 
         [SerializeField] private TestGameplay _testGameplay;
+
+        private EntitiesLifeContext _entitiesLifeContext;
 
         public override void ProcessRegistrations(DIContainer container, IInputSceneArgs sceneArgs = null)
         {
@@ -52,6 +55,8 @@ namespace Gameplay.Infrastructure
                 _container.Resolve<GameResultService>(),
                 _container.Resolve<GameplayPopupService>());
 
+            _entitiesLifeContext = _container.Resolve<EntitiesLifeContext>();
+
             _testGameplay.Initialize(_container);
 
             yield return _gameplayCycle.Prepare();
@@ -68,6 +73,8 @@ namespace Gameplay.Infrastructure
 
         private void Update()
         {
+            _entitiesLifeContext?.Update(Time.deltaTime);
+
             _userInputService?.Update(Time.deltaTime);
         }
 

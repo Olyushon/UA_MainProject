@@ -23,6 +23,12 @@ namespace Gameplay.Infrastructure
             container.RegisterAsSingle(CreateGameplayPopupService);
 
             container.RegisterAsSingle(CreateEntitiesFactory);
+            container.RegisterAsSingle(CreateEntitiesLifeContext);
+        }
+
+        private static EntitiesLifeContext CreateEntitiesLifeContext(DIContainer c)
+        {
+            return new EntitiesLifeContext();
         }
 
         private static EntitiesFactory CreateEntitiesFactory(DIContainer c)

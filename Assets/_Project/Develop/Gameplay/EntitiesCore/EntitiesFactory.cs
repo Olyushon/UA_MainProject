@@ -8,10 +8,12 @@ namespace Gameplay.EntitiesCore
     public class EntitiesFactory
     {
         private readonly DIContainer _container;
+        private readonly EntitiesLifeContext _entitiesLifeContext;
 
         public EntitiesFactory(DIContainer container)
         {
             _container = container;
+            _entitiesLifeContext = container.Resolve<EntitiesLifeContext>();
         }
 
         public Entity CreateTestEntity() {
@@ -22,6 +24,8 @@ namespace Gameplay.EntitiesCore
                 .AddComponent(new MoveSpeed(){Value = new ReactiveVariable<float>(10f)});
 
             entity.AddSystem(new MovementSystem());
+
+            _entitiesLifeContext.Add(entity);
 
             return entity;
         }
