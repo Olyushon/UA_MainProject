@@ -7,19 +7,18 @@ namespace Gameplay.Features.MovementFeature
 {
     public class MovementSystem : IInitializableSystem, IUpdatableSystem
     {
-        private Entity _entity;
+        private ReactiveVariable<Vector3> _direction;
+        private ReactiveVariable<float> _speed;
 
         public void OnInitialize(Entity entity)
         {
-            _entity = entity;
+            _direction = entity.GetComponent<MoveDirection>().Value;
+            _speed = entity.GetComponent<MoveSpeed>().Value;
         }
 
         public void OnUpdate(float deltaTime)
         {
-            ReactiveVariable<Vector3> direction = _entity.GetComponent<MoveDirection>().Value;
-            ReactiveVariable<float> speed = _entity.GetComponent<MoveSpeed>().Value;
-
-            Vector3 velocity = direction.Value.normalized * speed.Value;
+            Vector3 velocity = _direction.Value.normalized * _speed.Value;
 
             Debug.Log("Применяемая скорость: " + velocity.ToString());
         }
