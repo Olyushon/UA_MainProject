@@ -7,8 +7,10 @@ namespace Gameplay.EntitiesCore
     {
         private readonly Dictionary<Type, IEntityComponent> _components = new();
 
-        public void AddComponent<TComponent>(TComponent component) where TComponent : class, IEntityComponent {
+        public Entity AddComponent<TComponent>(TComponent component) where TComponent : class, IEntityComponent {
             _components.Add(typeof(TComponent), component);
+
+            return this; // Теперь можно добавлять компоненты цепочкой
         }
 
         public bool HasComponent<TComponent>() where TComponent : class, IEntityComponent {
