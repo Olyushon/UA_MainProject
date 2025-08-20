@@ -25,7 +25,7 @@ namespace Gameplay.EntitiesCore
             _monoEntitiesFactory.Create(entity, position, "Entities/TestEntity");
 
             entity
-                .AddMoveDirection(new ReactiveVariable<Vector3>(Vector3.forward))
+                .AddMoveDirection()
                 .AddMoveSpeed(new ReactiveVariable<float>(10f));
 
             entity.AddSystem(new RigidbodyMovementSystem());
