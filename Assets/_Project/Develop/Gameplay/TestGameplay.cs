@@ -1,5 +1,4 @@
 using Gameplay.EntitiesCore;
-using Gameplay.Features.MovementFeature;
 using Infrastructure.DI;
 using UnityEngine;
 
