@@ -11,6 +11,7 @@ namespace Gameplay
         private EntitiesFactory _entitiesFactory;
 
         private bool _isRunning;
+        private Entity _testEntity;
 
         public void Initialize(DIContainer container) {
             _container = container;
@@ -20,17 +21,16 @@ namespace Gameplay
         public void Run() {
             _isRunning = true;
 
-            Entity testEntity = _entitiesFactory.CreateTestEntity(Vector3.zero);
-
-            Debug.Log("Направление движения: " + testEntity.GetComponent<MoveDirection>().Value.Value.ToString());
-            Debug.Log("Скорость движения: " + testEntity.GetComponent<MoveSpeed>().Value.Value.ToString());
+            _testEntity = _entitiesFactory.CreateTestEntity(Vector3.zero);
         }
 
         public void Update() {
             if (_isRunning == false)
                 return;
 
-            // Debug.Log("TestGameplay is running");
+            Vector3 input = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+
+            _testEntity.GetComponent<MoveDirection>().Value.Value = input;
         }
     }
 }

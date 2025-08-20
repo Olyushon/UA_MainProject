@@ -28,7 +28,7 @@ namespace Gameplay.EntitiesCore
                 .AddComponent(new MoveDirection(){Value = new ReactiveVariable<Vector3>(Vector3.forward)})
                 .AddComponent(new MoveSpeed(){Value = new ReactiveVariable<float>(10f)});
 
-            entity.AddSystem(new MovementSystem());
+            entity.AddSystem(new RigidbodyMovementSystem());
 
             _entitiesLifeContext.Add(entity);
 
