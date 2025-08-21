@@ -20,7 +20,8 @@ namespace Gameplay
         public void Run() {
             _isRunning = true;
 
-            _testEntity = _entitiesFactory.CreateTestEntity(Vector3.zero);
+            // _testEntity = _entitiesFactory.CreateRigidbodyTestEntity(Vector3.zero);
+            _testEntity = _entitiesFactory.CreateCharacterControllerTestEntity(Vector3.zero);
         }
 
         public void Update() {

@@ -13,4 +13,9 @@ namespace Gameplay.Features.MovementFeature
     {
         public ReactiveVariable<float> Value;
     }
+
+    public class CharacterControllerComponent : IEntityComponent
+    {
+        public CharacterController Value;
+    }
 }
