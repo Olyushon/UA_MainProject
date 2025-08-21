@@ -19,7 +19,7 @@ namespace Gameplay.Infrastructure
 
             container.RegisterAsSingle(CreateGameplayUIRoot).NonLazy();
             container.RegisterAsSingle(CreateGameplayPresentersFactory);
-            container.RegisterAsSingle(CreateGameplayScreenPresenter).NonLazy();
+            // container.RegisterAsSingle(CreateGameplayScreenPresenter).NonLazy();
 
             container.RegisterAsSingle(CreateGameplayPopupService);
 
