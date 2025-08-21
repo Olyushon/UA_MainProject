@@ -62,5 +62,14 @@ namespace Gameplay.EntitiesCore
 			return AddComponent(new Gameplay.Common.RigidbodyComponent() {Value = value}); 
 		}
 
+		public Gameplay.Common.TransformComponent TransformC => GetComponent<Gameplay.Common.TransformComponent>();
+
+		public UnityEngine.Transform Transform => TransformC.Value;
+
+		public Gameplay.EntitiesCore.Entity AddTransform(UnityEngine.Transform value)
+		{
+			return AddComponent(new Gameplay.Common.TransformComponent() {Value = value}); 
+		}
+
 	}
 }

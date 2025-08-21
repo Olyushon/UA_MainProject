@@ -49,6 +49,7 @@ namespace Gameplay.EntitiesCore
                 .AddRotationSpeed(new ReactiveVariable<float>(600f));
 
             entity.AddSystem(new CharacterControllerMovementSystem());
+            entity.AddSystem(new TransformRotationSystem());
 
             _entitiesLifeContext.Add(entity);
 
