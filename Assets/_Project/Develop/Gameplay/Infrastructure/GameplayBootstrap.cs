@@ -11,6 +11,7 @@ using Meta.Features.Counters;
 using Gameplay.Features.CostsManagment;
 using Utilities.DataManagment.DataProviders;
 using UI.Gameplay;
+using Gameplay.EntitiesCore;
 
 namespace Gameplay.Infrastructure
 {
@@ -21,6 +22,10 @@ namespace Gameplay.Infrastructure
         private GameplayInputArgs _inputArgs;
         private GameplayCycle _gameplayCycle;
         private UserInputService _userInputService;
+
+        [SerializeField] private TestGameplay _testGameplay;
+
+        private EntitiesLifeContext _entitiesLifeContext;
 
         public override void ProcessRegistrations(DIContainer container, IInputSceneArgs sceneArgs = null)
         {
@@ -38,36 +43,45 @@ namespace Gameplay.Infrastructure
         {
             Debug.LogFormat(_modeMessage, _inputArgs.SequenceType);
 
-            _userInputService = _container.Resolve<UserInputService>();
-            _gameplayCycle = new GameplayCycle(
-                _inputArgs,
-                _container.Resolve<SequenceService>(),
-                _userInputService,
-                _container.Resolve<ICoroutinesPerformer>(),
-                _container.Resolve<CountersDataService>(),
-                _container.Resolve<CostsCalculateService>(),
-                _container.Resolve<PlayerDataProvider>(),
-                _container.Resolve<GameResultService>(),
-                _container.Resolve<GameplayPopupService>());
+            // _userInputService = _container.Resolve<UserInputService>();
+            // _gameplayCycle = new GameplayCycle(
+            //     _inputArgs,
+            //     _container.Resolve<SequenceService>(),
+            //     _userInputService,
+            //     _container.Resolve<ICoroutinesPerformer>(),
+            //     _container.Resolve<CountersDataService>(),
+            //     _container.Resolve<CostsCalculateService>(),
+            //     _container.Resolve<PlayerDataProvider>(),
+            //     _container.Resolve<GameResultService>(),
+            //     _container.Resolve<GameplayPopupService>());
 
-            yield return _gameplayCycle.Prepare();
+            _entitiesLifeContext = _container.Resolve<EntitiesLifeContext>();
+
+            _testGameplay.Initialize(_container);
+
+            // yield return _gameplayCycle.Prepare();
+            yield return null;
         }
 
         public override void Run()
         {
             Debug.Log("Gameplay scene");
 
-            _gameplayCycle.Launch();
+            // _gameplayCycle.Launch();
+
+            _testGameplay.Run();
         }
 
         private void Update()
         {
-            _userInputService?.Update(Time.deltaTime);
+            _entitiesLifeContext?.Update(Time.deltaTime);
+
+            // _userInputService?.Update(Time.deltaTime);
         }
 
         private void OnDestroy()
         {
-            _gameplayCycle.Dispose();
+            // _gameplayCycle.Dispose();
         }
     }
 }

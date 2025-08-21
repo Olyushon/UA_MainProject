@@ -1,0 +1,61 @@
+using Gameplay.EntitiesCore.Mono;
+using Gameplay.Features.MovementFeature;
+using Gameplay.Features.RotationFeature;
+using Infrastructure.DI;
+using UnityEngine;
+using Utilities.Reactive;
+
+namespace Gameplay.EntitiesCore
+{
+    public class EntitiesFactory
+    {
+        private readonly DIContainer _container;
+        private readonly EntitiesLifeContext _entitiesLifeContext;
+        private readonly MonoEntitiesFactory _monoEntitiesFactory;
+
+        public EntitiesFactory(DIContainer container)
+        {
+            _container = container;
+            _entitiesLifeContext = _container.Resolve<EntitiesLifeContext>();
+            _monoEntitiesFactory = _container.Resolve<MonoEntitiesFactory>();
+        }
+
+        public Entity CreateRigidbodyTestEntity(Vector3 position) {
+            Entity entity = CreateEmpty();
+
+            _monoEntitiesFactory.Create(entity, position, "Entities/RBTestEntity");
+
+            entity
+                .AddMoveDirection()
+                .AddMoveSpeed(new ReactiveVariable<float>(10f))
+                .AddRotationSpeed(new ReactiveVariable<float>(600f));
+
+            entity.AddSystem(new RigidbodyMovementSystem());
+            entity.AddSystem(new RigidbodyRotationSystem());
+
+            _entitiesLifeContext.Add(entity);
+
+            return entity;
+        }
+        
+        public Entity CreateCharacterControllerTestEntity(Vector3 position) {
+            Entity entity = CreateEmpty();
+
+            _monoEntitiesFactory.Create(entity, position, "Entities/CCTestEntity");
+
+            entity
+                .AddMoveDirection()
+                .AddMoveSpeed(new ReactiveVariable<float>(10f))
+                .AddRotationSpeed(new ReactiveVariable<float>(600f));
+
+            entity.AddSystem(new CharacterControllerMovementSystem());
+            entity.AddSystem(new TransformRotationSystem());
+
+            _entitiesLifeContext.Add(entity);
+
+            return entity;
+        }
+
+        private Entity CreateEmpty() => new Entity();
+    }
+}

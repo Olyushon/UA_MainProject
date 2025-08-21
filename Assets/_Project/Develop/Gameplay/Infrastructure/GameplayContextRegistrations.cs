@@ -5,6 +5,8 @@ using Gameplay.Features.UserInputManagment;
 using UI.Gameplay;
 using UnityEngine;
 using UI.Core;
+using Gameplay.EntitiesCore;
+using Gameplay.EntitiesCore.Mono;
 
 namespace Gameplay.Infrastructure
 {
@@ -17,9 +19,31 @@ namespace Gameplay.Infrastructure
 
             container.RegisterAsSingle(CreateGameplayUIRoot).NonLazy();
             container.RegisterAsSingle(CreateGameplayPresentersFactory);
-            container.RegisterAsSingle(CreateGameplayScreenPresenter).NonLazy();
+            // container.RegisterAsSingle(CreateGameplayScreenPresenter).NonLazy();
 
             container.RegisterAsSingle(CreateGameplayPopupService);
+
+            container.RegisterAsSingle(CreateEntitiesFactory);
+            container.RegisterAsSingle(CreateEntitiesLifeContext);
+
+            container.RegisterAsSingle(CreateMonoEntitiesFactory).NonLazy();
+        }
+
+        private static MonoEntitiesFactory CreateMonoEntitiesFactory(DIContainer c)
+        {
+            return new MonoEntitiesFactory(
+                c.Resolve<ResourcesLoader>(),
+                c.Resolve<EntitiesLifeContext>());
+        }
+
+        private static EntitiesLifeContext CreateEntitiesLifeContext(DIContainer c)
+        {
+            return new EntitiesLifeContext();
+        }
+
+        private static EntitiesFactory CreateEntitiesFactory(DIContainer c)
+        {
+            return new EntitiesFactory(c);
         }
 
         private static GameplayPopupService CreateGameplayPopupService(DIContainer c)
