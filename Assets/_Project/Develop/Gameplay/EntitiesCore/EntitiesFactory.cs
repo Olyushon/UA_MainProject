@@ -1,5 +1,6 @@
 using Gameplay.EntitiesCore.Mono;
 using Gameplay.Features.MovementFeature;
+using Gameplay.Features.RotationFeature;
 using Infrastructure.DI;
 using UnityEngine;
 using Utilities.Reactive;
@@ -26,9 +27,11 @@ namespace Gameplay.EntitiesCore
 
             entity
                 .AddMoveDirection()
-                .AddMoveSpeed(new ReactiveVariable<float>(10f));
+                .AddMoveSpeed(new ReactiveVariable<float>(10f))
+                .AddRotationSpeed(new ReactiveVariable<float>(600f));
 
             entity.AddSystem(new RigidbodyMovementSystem());
+            entity.AddSystem(new RigidbodyRotationSystem());
 
             _entitiesLifeContext.Add(entity);
 

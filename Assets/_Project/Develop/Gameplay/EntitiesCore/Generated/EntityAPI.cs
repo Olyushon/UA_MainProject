@@ -2,6 +2,20 @@ namespace Gameplay.EntitiesCore
 {
 	public partial class Entity
 	{
+		public Gameplay.Features.RotationFeature.RotationSpeed RotationSpeedC => GetComponent<Gameplay.Features.RotationFeature.RotationSpeed>();
+
+		public Utilities.Reactive.ReactiveVariable<System.Single> RotationSpeed => RotationSpeedC.Value;
+
+		public Gameplay.EntitiesCore.Entity AddRotationSpeed()
+		{
+			return AddComponent(new Gameplay.Features.RotationFeature.RotationSpeed() { Value = new Utilities.Reactive.ReactiveVariable<System.Single>() }); 
+		}
+
+		public Gameplay.EntitiesCore.Entity AddRotationSpeed(Utilities.Reactive.ReactiveVariable<System.Single> value)
+		{
+			return AddComponent(new Gameplay.Features.RotationFeature.RotationSpeed() {Value = value}); 
+		}
+
 		public Gameplay.Features.MovementFeature.MoveDirection MoveDirectionC => GetComponent<Gameplay.Features.MovementFeature.MoveDirection>();
 
 		public Utilities.Reactive.ReactiveVariable<UnityEngine.Vector3> MoveDirection => MoveDirectionC.Value;
