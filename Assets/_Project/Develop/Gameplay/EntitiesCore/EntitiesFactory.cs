@@ -75,9 +75,11 @@ namespace Gameplay.EntitiesCore
                 .AddMaxHealth(new ReactiveVariable<float>(100f))
                 .AddIsDead();
 
-            entity.AddSystem(new RigidbodyMovementSystem());
-            entity.AddSystem(new RigidbodyRotationSystem());
-            entity.AddSystem(new DeathSystem());
+            entity
+                .AddSystem(new RigidbodyMovementSystem())
+                .AddSystem(new RigidbodyRotationSystem())
+                .AddSystem(new DeathSystem())
+                .AddSystem(new SelfReleaseSystem(_entitiesLifeContext));
 
             _entitiesLifeContext.Add(entity);
 
