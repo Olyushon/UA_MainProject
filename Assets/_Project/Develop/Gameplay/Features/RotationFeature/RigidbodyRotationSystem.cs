@@ -10,16 +10,22 @@ namespace Gameplay.Features.RotationFeature
         private ReactiveVariable<Vector3> _rotationDirection;
         private ReactiveVariable<float> _rotationSpeed;
         private Rigidbody _rigidbody;
+        private ReactiveVariable<bool> _isDead;
 
         public void OnInitialize(Entity entity)
         {
             _rotationDirection = entity.RotationDirection;
             _rotationSpeed = entity.RotationSpeed;
             _rigidbody = entity.Rigidbody;
+
+            _isDead = entity.IsDead;
         }
 
         public void OnUpdate(float deltaTime)
         {
+            if (_isDead.Value)
+                return;
+
             if (_rotationDirection.Value.magnitude > 0.1f)
             {
                 Quaternion targetRotation = Quaternion.LookRotation(_rotationDirection.Value);
