@@ -21,7 +21,8 @@ namespace Gameplay
             _isRunning = true;
 
             // _testEntity = _entitiesFactory.CreateRigidbodyTestEntity(Vector3.zero);
-            _testEntity = _entitiesFactory.CreateCharacterControllerTestEntity(Vector3.zero);
+            // _testEntity = _entitiesFactory.CreateCharacterControllerTestEntity(Vector3.zero);
+            _testEntity = _entitiesFactory.CreateGhostEntity(Vector3.zero);
         }
 
         public void Update() {
