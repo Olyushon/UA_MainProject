@@ -1,4 +1,5 @@
 using Gameplay.EntitiesCore.Mono;
+using Gameplay.Features.LifeCycle;
 using Gameplay.Features.MovementFeature;
 using Gameplay.Features.RotationFeature;
 using Infrastructure.DI;
@@ -69,10 +70,14 @@ namespace Gameplay.EntitiesCore
                 .AddMoveDirection()
                 .AddMoveSpeed(new ReactiveVariable<float>(10f))
                 .AddRotationDirection()
-                .AddRotationSpeed(new ReactiveVariable<float>(600f));
+                .AddRotationSpeed(new ReactiveVariable<float>(600f))
+                .AddCurrentHealth(new ReactiveVariable<float>(100f))
+                .AddMaxHealth(new ReactiveVariable<float>(100f))
+                .AddIsDead();
 
             entity.AddSystem(new RigidbodyMovementSystem());
             entity.AddSystem(new RigidbodyRotationSystem());
+            entity.AddSystem(new DeathSystem());
 
             _entitiesLifeContext.Add(entity);
 

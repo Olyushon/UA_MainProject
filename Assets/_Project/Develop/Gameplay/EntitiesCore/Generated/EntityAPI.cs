@@ -67,6 +67,48 @@ namespace Gameplay.EntitiesCore
 			return AddComponent(new Gameplay.Features.MovementFeature.CharacterControllerComponent() {Value = value}); 
 		}
 
+		public Gameplay.Features.LifeCycle.CurrentHealth CurrentHealthC => GetComponent<Gameplay.Features.LifeCycle.CurrentHealth>();
+
+		public Utilities.Reactive.ReactiveVariable<System.Single> CurrentHealth => CurrentHealthC.Value;
+
+		public Gameplay.EntitiesCore.Entity AddCurrentHealth()
+		{
+			return AddComponent(new Gameplay.Features.LifeCycle.CurrentHealth() { Value = new Utilities.Reactive.ReactiveVariable<System.Single>() }); 
+		}
+
+		public Gameplay.EntitiesCore.Entity AddCurrentHealth(Utilities.Reactive.ReactiveVariable<System.Single> value)
+		{
+			return AddComponent(new Gameplay.Features.LifeCycle.CurrentHealth() {Value = value}); 
+		}
+
+		public Gameplay.Features.LifeCycle.MaxHealth MaxHealthC => GetComponent<Gameplay.Features.LifeCycle.MaxHealth>();
+
+		public Utilities.Reactive.ReactiveVariable<System.Single> MaxHealth => MaxHealthC.Value;
+
+		public Gameplay.EntitiesCore.Entity AddMaxHealth()
+		{
+			return AddComponent(new Gameplay.Features.LifeCycle.MaxHealth() { Value = new Utilities.Reactive.ReactiveVariable<System.Single>() }); 
+		}
+
+		public Gameplay.EntitiesCore.Entity AddMaxHealth(Utilities.Reactive.ReactiveVariable<System.Single> value)
+		{
+			return AddComponent(new Gameplay.Features.LifeCycle.MaxHealth() {Value = value}); 
+		}
+
+		public Gameplay.Features.LifeCycle.IsDead IsDeadC => GetComponent<Gameplay.Features.LifeCycle.IsDead>();
+
+		public Utilities.Reactive.ReactiveVariable<System.Boolean> IsDead => IsDeadC.Value;
+
+		public Gameplay.EntitiesCore.Entity AddIsDead()
+		{
+			return AddComponent(new Gameplay.Features.LifeCycle.IsDead() { Value = new Utilities.Reactive.ReactiveVariable<System.Boolean>() }); 
+		}
+
+		public Gameplay.EntitiesCore.Entity AddIsDead(Utilities.Reactive.ReactiveVariable<System.Boolean> value)
+		{
+			return AddComponent(new Gameplay.Features.LifeCycle.IsDead() {Value = value}); 
+		}
+
 		public Gameplay.Common.RigidbodyComponent RigidbodyC => GetComponent<Gameplay.Common.RigidbodyComponent>();
 
 		public UnityEngine.Rigidbody Rigidbody => RigidbodyC.Value;
