@@ -31,6 +31,7 @@ namespace Gameplay
             Vector3 input = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 
             _testEntity.MoveDirection.Value = input;
+            _testEntity.RotationDirection.Value = input;
         }
     }
 }
