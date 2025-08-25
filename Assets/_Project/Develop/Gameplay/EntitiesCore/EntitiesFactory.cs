@@ -27,7 +27,10 @@ namespace Gameplay.EntitiesCore
 
             entity
                 .AddMoveDirection()
-                .AddMoveSpeed(new ReactiveVariable<float>(10f))
+                .AddMoveSpeed(new ReactiveVariable<float>(10f));
+
+            entity
+                .AddRotationDirection(entity.MoveDirection)
                 .AddRotationSpeed(new ReactiveVariable<float>(600f));
 
             entity.AddSystem(new RigidbodyMovementSystem());
@@ -45,7 +48,10 @@ namespace Gameplay.EntitiesCore
 
             entity
                 .AddMoveDirection()
-                .AddMoveSpeed(new ReactiveVariable<float>(10f))
+                .AddMoveSpeed(new ReactiveVariable<float>(10f));
+
+            entity
+                .AddRotationDirection(entity.MoveDirection)
                 .AddRotationSpeed(new ReactiveVariable<float>(600f));
 
             entity.AddSystem(new CharacterControllerMovementSystem());
@@ -65,7 +71,10 @@ namespace Gameplay.EntitiesCore
 
             entity
                 .AddMoveDirection()
-                .AddMoveSpeed(new ReactiveVariable<float>(10f))
+                .AddMoveSpeed(new ReactiveVariable<float>(10f));
+
+            entity
+                .AddRotationDirection(entity.MoveDirection)
                 .AddRotationSpeed(new ReactiveVariable<float>(600f));
 
             entity.AddSystem(new RigidbodyMovementSystem());

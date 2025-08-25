@@ -7,22 +7,22 @@ namespace Gameplay.Features.RotationFeature
 {
     public class RigidbodyRotationSystem : IInitializableSystem, IUpdatableSystem
     {
-        private ReactiveVariable<Vector3> _direction;
+        private ReactiveVariable<Vector3> _rotationDirection;
         private ReactiveVariable<float> _rotationSpeed;
         private Rigidbody _rigidbody;
 
         public void OnInitialize(Entity entity)
         {
-            _direction = entity.MoveDirection;
+            _rotationDirection = entity.RotationDirection;
             _rotationSpeed = entity.RotationSpeed;
             _rigidbody = entity.Rigidbody;
         }
 
         public void OnUpdate(float deltaTime)
         {
-            if (_direction.Value.magnitude > 0.1f)
+            if (_rotationDirection.Value.magnitude > 0.1f)
             {
-                Quaternion targetRotation = Quaternion.LookRotation(_direction.Value);
+                Quaternion targetRotation = Quaternion.LookRotation(_rotationDirection.Value);
                 Quaternion rotation = Quaternion.RotateTowards(
                     _rigidbody.rotation, 
                     targetRotation, 
