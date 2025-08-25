@@ -57,5 +57,23 @@ namespace Gameplay.EntitiesCore
         }
 
         private Entity CreateEmpty() => new Entity();
+
+        public Entity CreateGhostEntity(Vector3 position) {
+            Entity entity = CreateEmpty();
+
+            _monoEntitiesFactory.Create(entity, position, "Entities/Ghost");
+
+            entity
+                .AddMoveDirection()
+                .AddMoveSpeed(new ReactiveVariable<float>(10f))
+                .AddRotationSpeed(new ReactiveVariable<float>(600f));
+
+            entity.AddSystem(new RigidbodyMovementSystem());
+            entity.AddSystem(new RigidbodyRotationSystem());
+
+            _entitiesLifeContext.Add(entity);
+
+            return entity;
+        }
     }
 }
