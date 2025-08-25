@@ -109,6 +109,48 @@ namespace Gameplay.EntitiesCore
 			return AddComponent(new Gameplay.Features.LifeCycle.IsDead() {Value = value}); 
 		}
 
+		public Gameplay.Features.LifeCycle.DeathProcessInitialTime DeathProcessInitialTimeC => GetComponent<Gameplay.Features.LifeCycle.DeathProcessInitialTime>();
+
+		public Utilities.Reactive.ReactiveVariable<System.Single> DeathProcessInitialTime => DeathProcessInitialTimeC.Value;
+
+		public Gameplay.EntitiesCore.Entity AddDeathProcessInitialTime()
+		{
+			return AddComponent(new Gameplay.Features.LifeCycle.DeathProcessInitialTime() { Value = new Utilities.Reactive.ReactiveVariable<System.Single>() }); 
+		}
+
+		public Gameplay.EntitiesCore.Entity AddDeathProcessInitialTime(Utilities.Reactive.ReactiveVariable<System.Single> value)
+		{
+			return AddComponent(new Gameplay.Features.LifeCycle.DeathProcessInitialTime() {Value = value}); 
+		}
+
+		public Gameplay.Features.LifeCycle.DeathProcessCurrentTime DeathProcessCurrentTimeC => GetComponent<Gameplay.Features.LifeCycle.DeathProcessCurrentTime>();
+
+		public Utilities.Reactive.ReactiveVariable<System.Single> DeathProcessCurrentTime => DeathProcessCurrentTimeC.Value;
+
+		public Gameplay.EntitiesCore.Entity AddDeathProcessCurrentTime()
+		{
+			return AddComponent(new Gameplay.Features.LifeCycle.DeathProcessCurrentTime() { Value = new Utilities.Reactive.ReactiveVariable<System.Single>() }); 
+		}
+
+		public Gameplay.EntitiesCore.Entity AddDeathProcessCurrentTime(Utilities.Reactive.ReactiveVariable<System.Single> value)
+		{
+			return AddComponent(new Gameplay.Features.LifeCycle.DeathProcessCurrentTime() {Value = value}); 
+		}
+
+		public Gameplay.Features.LifeCycle.InDeathProcess InDeathProcessC => GetComponent<Gameplay.Features.LifeCycle.InDeathProcess>();
+
+		public Utilities.Reactive.ReactiveVariable<System.Boolean> InDeathProcess => InDeathProcessC.Value;
+
+		public Gameplay.EntitiesCore.Entity AddInDeathProcess()
+		{
+			return AddComponent(new Gameplay.Features.LifeCycle.InDeathProcess() { Value = new Utilities.Reactive.ReactiveVariable<System.Boolean>() }); 
+		}
+
+		public Gameplay.EntitiesCore.Entity AddInDeathProcess(Utilities.Reactive.ReactiveVariable<System.Boolean> value)
+		{
+			return AddComponent(new Gameplay.Features.LifeCycle.InDeathProcess() {Value = value}); 
+		}
+
 		public Gameplay.Common.RigidbodyComponent RigidbodyC => GetComponent<Gameplay.Common.RigidbodyComponent>();
 
 		public UnityEngine.Rigidbody Rigidbody => RigidbodyC.Value;

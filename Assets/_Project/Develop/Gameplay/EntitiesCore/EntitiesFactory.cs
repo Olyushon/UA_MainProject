@@ -73,12 +73,16 @@ namespace Gameplay.EntitiesCore
                 .AddRotationSpeed(new ReactiveVariable<float>(600f))
                 .AddCurrentHealth(new ReactiveVariable<float>(100f))
                 .AddMaxHealth(new ReactiveVariable<float>(100f))
-                .AddIsDead();
+                .AddIsDead()
+                .AddInDeathProcess()
+                .AddDeathProcessInitialTime(new ReactiveVariable<float>(2f))
+                .AddDeathProcessCurrentTime(new ReactiveVariable<float>());
 
             entity
                 .AddSystem(new RigidbodyMovementSystem())
                 .AddSystem(new RigidbodyRotationSystem())
                 .AddSystem(new DeathSystem())
+                .AddSystem(new DeathProcessTimerSystem())
                 .AddSystem(new SelfReleaseSystem(_entitiesLifeContext));
 
             _entitiesLifeContext.Add(entity);
