@@ -127,6 +127,24 @@ namespace Gameplay.EntitiesCore
 			return AddComponent(new Gameplay.Features.LifeCycle.IsDead() {Value = value}); 
 		}
 
+		public Gameplay.Features.LifeCycle.MustDie MustDieC => GetComponent<Gameplay.Features.LifeCycle.MustDie>();
+
+		public Utilities.Conditions.ICompositeCondition MustDie => MustDieC.Value;
+
+		public Gameplay.EntitiesCore.Entity AddMustDie(Utilities.Conditions.ICompositeCondition value)
+		{
+			return AddComponent(new Gameplay.Features.LifeCycle.MustDie() {Value = value}); 
+		}
+
+		public Gameplay.Features.LifeCycle.MustSelfRelease MustSelfReleaseC => GetComponent<Gameplay.Features.LifeCycle.MustSelfRelease>();
+
+		public Utilities.Conditions.ICompositeCondition MustSelfRelease => MustSelfReleaseC.Value;
+
+		public Gameplay.EntitiesCore.Entity AddMustSelfRelease(Utilities.Conditions.ICompositeCondition value)
+		{
+			return AddComponent(new Gameplay.Features.LifeCycle.MustSelfRelease() {Value = value}); 
+		}
+
 		public Gameplay.Features.LifeCycle.DeathProcessInitialTime DeathProcessInitialTimeC => GetComponent<Gameplay.Features.LifeCycle.DeathProcessInitialTime>();
 
 		public Utilities.Reactive.ReactiveVariable<System.Single> DeathProcessInitialTime => DeathProcessInitialTimeC.Value;

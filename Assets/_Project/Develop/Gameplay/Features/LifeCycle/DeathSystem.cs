@@ -1,19 +1,19 @@
 using Gameplay.EntitiesCore;
 using Gameplay.EntitiesCore.Systems;
-using UnityEngine;
+using Utilities.Conditions;
 using Utilities.Reactive;
 
 namespace Gameplay.Features.LifeCycle
 {
     public class DeathSystem : IInitializableSystem, IUpdatableSystem
     {
-        private ReactiveVariable<float> _currentHealth;
         private ReactiveVariable<bool> _isDead;
+        private ICompositeCondition _mustDie;
 
         public void OnInitialize(Entity entity)
         {
-            _currentHealth = entity.CurrentHealth;
             _isDead = entity.IsDead;
+            _mustDie = entity.MustDie;
         }
 
         public void OnUpdate(float deltaTime)
@@ -21,9 +21,8 @@ namespace Gameplay.Features.LifeCycle
             if (_isDead.Value)
                 return;
                 
-            if (_currentHealth.Value <= 0) {
+            if (_mustDie.Evaluate()) {
                 _isDead.Value = true;
-                Debug.Log("Dead");
             }
         }
     }
