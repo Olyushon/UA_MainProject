@@ -1,5 +1,6 @@
 using Gameplay.EntitiesCore;
 using UnityEngine;
+using Utilities.Conditions;
 using Utilities.Reactive;
 
 namespace Gameplay.Features.MovementFeature
@@ -12,6 +13,11 @@ namespace Gameplay.Features.MovementFeature
     public class MoveSpeed: IEntityComponent
     {
         public ReactiveVariable<float> Value;
+    }
+
+    public class CanMove: IEntityComponent
+    {
+        public ICompositeCondition Value;
     }
 
     public class CharacterControllerComponent : IEntityComponent

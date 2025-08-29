@@ -1,6 +1,7 @@
 using Gameplay.EntitiesCore;
 using Gameplay.EntitiesCore.Systems;
 using UnityEngine;
+using Utilities.Conditions;
 using Utilities.Reactive;
 
 namespace Gameplay.Features.MovementFeature
@@ -10,7 +11,7 @@ namespace Gameplay.Features.MovementFeature
         private ReactiveVariable<Vector3> _direction;
         private ReactiveVariable<float> _speed;
         private Rigidbody _rigidbody;
-        private ReactiveVariable<bool> _isDead;
+        private ICompositeCondition _canMove;
 
         public void OnInitialize(Entity entity)
         {
@@ -18,12 +19,12 @@ namespace Gameplay.Features.MovementFeature
             _speed = entity.MoveSpeed;
             _rigidbody = entity.Rigidbody;
 
-            _isDead = entity.IsDead;
+            _canMove = entity.CanMove;
         }
 
         public void OnUpdate(float deltaTime)
         {
-            if (_isDead.Value) {
+            if (_canMove.Evaluate() == false) {
                 _rigidbody.velocity = Vector3.zero;
                 return;
             }

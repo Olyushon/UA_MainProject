@@ -4,6 +4,7 @@ using Gameplay.Features.MovementFeature;
 using Gameplay.Features.RotationFeature;
 using Infrastructure.DI;
 using UnityEngine;
+using Utilities.Conditions;
 using Utilities.Reactive;
 
 namespace Gameplay.EntitiesCore
@@ -77,6 +78,16 @@ namespace Gameplay.EntitiesCore
                 .AddInDeathProcess()
                 .AddDeathProcessInitialTime(new ReactiveVariable<float>(2f))
                 .AddDeathProcessCurrentTime(new ReactiveVariable<float>());
+
+            ICompositeCondition canMove = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.IsDead.Value == false));
+
+            ICompositeCondition canRotate = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.IsDead.Value == false));
+
+            entity
+                .AddCanMove(canMove)
+                .AddCanRotate(canRotate);
 
             entity
                 .AddSystem(new RigidbodyMovementSystem())

@@ -30,6 +30,15 @@ namespace Gameplay.EntitiesCore
 			return AddComponent(new Gameplay.Features.RotationFeature.RotationSpeed() {Value = value}); 
 		}
 
+		public Gameplay.Features.RotationFeature.CanRotate CanRotateC => GetComponent<Gameplay.Features.RotationFeature.CanRotate>();
+
+		public Utilities.Conditions.ICompositeCondition CanRotate => CanRotateC.Value;
+
+		public Gameplay.EntitiesCore.Entity AddCanRotate(Utilities.Conditions.ICompositeCondition value)
+		{
+			return AddComponent(new Gameplay.Features.RotationFeature.CanRotate() {Value = value}); 
+		}
+
 		public Gameplay.Features.MovementFeature.MoveDirection MoveDirectionC => GetComponent<Gameplay.Features.MovementFeature.MoveDirection>();
 
 		public Utilities.Reactive.ReactiveVariable<UnityEngine.Vector3> MoveDirection => MoveDirectionC.Value;
@@ -56,6 +65,15 @@ namespace Gameplay.EntitiesCore
 		public Gameplay.EntitiesCore.Entity AddMoveSpeed(Utilities.Reactive.ReactiveVariable<System.Single> value)
 		{
 			return AddComponent(new Gameplay.Features.MovementFeature.MoveSpeed() {Value = value}); 
+		}
+
+		public Gameplay.Features.MovementFeature.CanMove CanMoveC => GetComponent<Gameplay.Features.MovementFeature.CanMove>();
+
+		public Utilities.Conditions.ICompositeCondition CanMove => CanMoveC.Value;
+
+		public Gameplay.EntitiesCore.Entity AddCanMove(Utilities.Conditions.ICompositeCondition value)
+		{
+			return AddComponent(new Gameplay.Features.MovementFeature.CanMove() {Value = value}); 
 		}
 
 		public Gameplay.Features.MovementFeature.CharacterControllerComponent CharacterControllerC => GetComponent<Gameplay.Features.MovementFeature.CharacterControllerComponent>();

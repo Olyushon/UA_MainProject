@@ -1,5 +1,6 @@
 using Gameplay.EntitiesCore;
 using UnityEngine;
+using Utilities.Conditions;
 using Utilities.Reactive;
 
 namespace Gameplay.Features.RotationFeature
@@ -11,5 +12,10 @@ namespace Gameplay.Features.RotationFeature
     public class RotationSpeed: IEntityComponent
     {
         public ReactiveVariable<float> Value;
+    }
+
+    public class CanRotate: IEntityComponent
+    {
+        public ICompositeCondition Value;
     }
 }
