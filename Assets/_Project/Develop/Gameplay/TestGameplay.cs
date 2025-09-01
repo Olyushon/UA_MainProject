@@ -29,10 +29,8 @@ namespace Gameplay
             if (_isRunning == false)
                 return;
 
-            if (Input.GetKeyDown(KeyCode.Space)) {
-                _testEntity.CurrentHealth.Value -= 50;
-                Debug.Log("CurrentHealth: " + _testEntity.CurrentHealth.Value);
-            }
+            if (Input.GetKeyDown(KeyCode.Space))
+                _testEntity.TakeDamageRequest.Invoke(50);
 
             Vector3 input = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 

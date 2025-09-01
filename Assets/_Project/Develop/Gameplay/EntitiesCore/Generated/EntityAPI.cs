@@ -187,6 +187,43 @@ namespace Gameplay.EntitiesCore
 			return AddComponent(new Gameplay.Features.LifeCycle.InDeathProcess() {Value = value}); 
 		}
 
+		public Gameplay.Features.ApplyDamage.TakeDamageRequest TakeDamageRequestC => GetComponent<Gameplay.Features.ApplyDamage.TakeDamageRequest>();
+
+		public Utilities.Reactive.ReactiveEvent<System.Single> TakeDamageRequest => TakeDamageRequestC.Value;
+
+		public Gameplay.EntitiesCore.Entity AddTakeDamageRequest()
+		{
+			return AddComponent(new Gameplay.Features.ApplyDamage.TakeDamageRequest() { Value = new Utilities.Reactive.ReactiveEvent<System.Single>() }); 
+		}
+
+		public Gameplay.EntitiesCore.Entity AddTakeDamageRequest(Utilities.Reactive.ReactiveEvent<System.Single> value)
+		{
+			return AddComponent(new Gameplay.Features.ApplyDamage.TakeDamageRequest() {Value = value}); 
+		}
+
+		public Gameplay.Features.ApplyDamage.TakeDamageEvent TakeDamageEventC => GetComponent<Gameplay.Features.ApplyDamage.TakeDamageEvent>();
+
+		public Utilities.Reactive.ReactiveEvent<System.Single> TakeDamageEvent => TakeDamageEventC.Value;
+
+		public Gameplay.EntitiesCore.Entity AddTakeDamageEvent()
+		{
+			return AddComponent(new Gameplay.Features.ApplyDamage.TakeDamageEvent() { Value = new Utilities.Reactive.ReactiveEvent<System.Single>() }); 
+		}
+
+		public Gameplay.EntitiesCore.Entity AddTakeDamageEvent(Utilities.Reactive.ReactiveEvent<System.Single> value)
+		{
+			return AddComponent(new Gameplay.Features.ApplyDamage.TakeDamageEvent() {Value = value}); 
+		}
+
+		public Gameplay.Features.ApplyDamage.CanApplyDamage CanApplyDamageC => GetComponent<Gameplay.Features.ApplyDamage.CanApplyDamage>();
+
+		public Utilities.Conditions.ICompositeCondition CanApplyDamage => CanApplyDamageC.Value;
+
+		public Gameplay.EntitiesCore.Entity AddCanApplyDamage(Utilities.Conditions.ICompositeCondition value)
+		{
+			return AddComponent(new Gameplay.Features.ApplyDamage.CanApplyDamage() {Value = value}); 
+		}
+
 		public Gameplay.Common.RigidbodyComponent RigidbodyC => GetComponent<Gameplay.Common.RigidbodyComponent>();
 
 		public UnityEngine.Rigidbody Rigidbody => RigidbodyC.Value;
