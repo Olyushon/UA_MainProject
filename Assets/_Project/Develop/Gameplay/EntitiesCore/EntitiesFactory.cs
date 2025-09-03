@@ -3,6 +3,7 @@ using Gameplay.Features.ApplyDamage;
 using Gameplay.Features.LifeCycle;
 using Gameplay.Features.MovementFeature;
 using Gameplay.Features.RotationFeature;
+using Gameplay.Features.Sensors;
 using Infrastructure.DI;
 using UnityEngine;
 using Utilities;
@@ -16,12 +17,14 @@ namespace Gameplay.EntitiesCore
         private readonly DIContainer _container;
         private readonly EntitiesLifeContext _entitiesLifeContext;
         private readonly MonoEntitiesFactory _monoEntitiesFactory;
+        private readonly CollidersRegistryService _collidersRegistryService;
 
         public EntitiesFactory(DIContainer container)
         {
             _container = container;
             _entitiesLifeContext = _container.Resolve<EntitiesLifeContext>();
             _monoEntitiesFactory = _container.Resolve<MonoEntitiesFactory>();
+            _collidersRegistryService = _container.Resolve<CollidersRegistryService>();
         }
 
         public Entity CreateRigidbodyTestEntity(Vector3 position) {
@@ -83,7 +86,8 @@ namespace Gameplay.EntitiesCore
                 .AddTakeDamageRequest()
                 .AddTakeDamageEvent()
                 .AddContactsDetectingMask(1 << LayerMask.NameToLayer("Characters"))
-                .AddContactCollidersBuffer(new Buffer<Collider>(64));
+                .AddContactCollidersBuffer(new Buffer<Collider>(64))
+                .AddContactEntitiesBuffer(new Buffer<Entity>(64));
 
             ICompositeCondition canMove = new CompositeCondition()
                 .Add(new FuncCondition(() => entity.IsDead.Value == false));
@@ -111,6 +115,8 @@ namespace Gameplay.EntitiesCore
             entity
                 .AddSystem(new RigidbodyMovementSystem())
                 .AddSystem(new RigidbodyRotationSystem())
+                .AddSystem(new BodyContactsDetectingSystem())
+                .AddSystem(new BodyContactsEntitiesFilterSystem(_collidersRegistryService))
                 .AddSystem(new ApplyDamageSystem())
                 .AddSystem(new DeathSystem())
                 .AddSystem(new DeathProcessTimerSystem())

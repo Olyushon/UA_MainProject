@@ -29,6 +29,15 @@ namespace Gameplay.EntitiesCore
 			return AddComponent(new Gameplay.Features.Sensors.ContactCollidersBuffer() {Value = value}); 
 		}
 
+		public Gameplay.Features.Sensors.ContactEntitiesBuffer ContactEntitiesBufferC => GetComponent<Gameplay.Features.Sensors.ContactEntitiesBuffer>();
+
+		public Utilities.Buffer<Gameplay.EntitiesCore.Entity> ContactEntitiesBuffer => ContactEntitiesBufferC.Value;
+
+		public Gameplay.EntitiesCore.Entity AddContactEntitiesBuffer(Utilities.Buffer<Gameplay.EntitiesCore.Entity> value)
+		{
+			return AddComponent(new Gameplay.Features.Sensors.ContactEntitiesBuffer() {Value = value}); 
+		}
+
 		public Gameplay.Features.RotationFeature.RotationDirection RotationDirectionC => GetComponent<Gameplay.Features.RotationFeature.RotationDirection>();
 
 		public Utilities.Reactive.ReactiveVariable<UnityEngine.Vector3> RotationDirection => RotationDirectionC.Value;

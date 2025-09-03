@@ -27,13 +27,21 @@ namespace Gameplay.Infrastructure
             container.RegisterAsSingle(CreateEntitiesLifeContext);
 
             container.RegisterAsSingle(CreateMonoEntitiesFactory).NonLazy();
+
+            container.RegisterAsSingle(CreateCollidersRegistryService);
+        }
+
+        private static CollidersRegistryService CreateCollidersRegistryService(DIContainer c)
+        {
+            return new CollidersRegistryService();
         }
 
         private static MonoEntitiesFactory CreateMonoEntitiesFactory(DIContainer c)
         {
             return new MonoEntitiesFactory(
                 c.Resolve<ResourcesLoader>(),
-                c.Resolve<EntitiesLifeContext>());
+                c.Resolve<EntitiesLifeContext>(),
+                c.Resolve<CollidersRegistryService>());
         }
 
         private static EntitiesLifeContext CreateEntitiesLifeContext(DIContainer c)
