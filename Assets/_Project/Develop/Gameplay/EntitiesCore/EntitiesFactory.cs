@@ -5,6 +5,7 @@ using Gameplay.Features.MovementFeature;
 using Gameplay.Features.RotationFeature;
 using Infrastructure.DI;
 using UnityEngine;
+using Utilities;
 using Utilities.Conditions;
 using Utilities.Reactive;
 
@@ -80,7 +81,9 @@ namespace Gameplay.EntitiesCore
                 .AddDeathProcessInitialTime(new ReactiveVariable<float>(2f))
                 .AddDeathProcessCurrentTime(new ReactiveVariable<float>())
                 .AddTakeDamageRequest()
-                .AddTakeDamageEvent();
+                .AddTakeDamageEvent()
+                .AddContactsDetectingMask(1 << LayerMask.NameToLayer("Characters"))
+                .AddContactCollidersBuffer(new Buffer<Collider>(64));
 
             ICompositeCondition canMove = new CompositeCondition()
                 .Add(new FuncCondition(() => entity.IsDead.Value == false));

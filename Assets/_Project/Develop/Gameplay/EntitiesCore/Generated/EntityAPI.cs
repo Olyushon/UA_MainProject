@@ -2,6 +2,33 @@ namespace Gameplay.EntitiesCore
 {
 	public partial class Entity
 	{
+		public Gameplay.Features.Sensors.BodyCollider BodyColliderC => GetComponent<Gameplay.Features.Sensors.BodyCollider>();
+
+		public UnityEngine.CapsuleCollider BodyCollider => BodyColliderC.Value;
+
+		public Gameplay.EntitiesCore.Entity AddBodyCollider(UnityEngine.CapsuleCollider value)
+		{
+			return AddComponent(new Gameplay.Features.Sensors.BodyCollider() {Value = value}); 
+		}
+
+		public Gameplay.Features.Sensors.ContactsDetectingMask ContactsDetectingMaskC => GetComponent<Gameplay.Features.Sensors.ContactsDetectingMask>();
+
+		public UnityEngine.LayerMask ContactsDetectingMask => ContactsDetectingMaskC.Value;
+
+		public Gameplay.EntitiesCore.Entity AddContactsDetectingMask(UnityEngine.LayerMask value)
+		{
+			return AddComponent(new Gameplay.Features.Sensors.ContactsDetectingMask() {Value = value}); 
+		}
+
+		public Gameplay.Features.Sensors.ContactCollidersBuffer ContactCollidersBufferC => GetComponent<Gameplay.Features.Sensors.ContactCollidersBuffer>();
+
+		public Utilities.Buffer<UnityEngine.Collider> ContactCollidersBuffer => ContactCollidersBufferC.Value;
+
+		public Gameplay.EntitiesCore.Entity AddContactCollidersBuffer(Utilities.Buffer<UnityEngine.Collider> value)
+		{
+			return AddComponent(new Gameplay.Features.Sensors.ContactCollidersBuffer() {Value = value}); 
+		}
+
 		public Gameplay.Features.RotationFeature.RotationDirection RotationDirectionC => GetComponent<Gameplay.Features.RotationFeature.RotationDirection>();
 
 		public Utilities.Reactive.ReactiveVariable<UnityEngine.Vector3> RotationDirection => RotationDirectionC.Value;
