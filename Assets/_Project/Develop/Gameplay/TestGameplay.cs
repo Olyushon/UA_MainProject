@@ -23,7 +23,7 @@ namespace Gameplay
             // _testEntity = _entitiesFactory.CreateRigidbodyTestEntity(Vector3.zero);
             // _testEntity = _entitiesFactory.CreateCharacterControllerTestEntity(Vector3.zero);
             
-            _testEntity = _entitiesFactory.CreateGhostEntity(Vector3.zero);
+            _testEntity = _entitiesFactory.CreateHeroEntity(Vector3.zero);
             _entitiesFactory.CreateGhostEntity(Vector3.zero + Vector3.forward * 5);
         }
 
