@@ -34,6 +34,9 @@ namespace Gameplay
             if (Input.GetKeyDown(KeyCode.Space))
                 _testEntity.TakeDamageRequest.Invoke(50);
 
+            if (Input.GetKeyDown(KeyCode.R))
+                _testEntity.StartAttackRequest.Invoke();
+
             Vector3 input = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 
             _testEntity.MoveDirection.Value = input;

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Gameplay.EntitiesCore;
 using Gameplay.EntitiesCore.Systems;
 using UnityEngine;
@@ -39,8 +37,6 @@ namespace Gameplay.Features.Sensors
                     _contactsEntities.Count++;
                 }
             }
-
-            Debug.Log($"Contacts Entities: {_contactsEntities.Count}");
         }
     }
 }

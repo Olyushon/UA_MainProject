@@ -15,6 +15,11 @@ namespace Gameplay.Features.MovementFeature
         public ReactiveVariable<float> Value;
     }
 
+    public class IsMoving: IEntityComponent
+    {
+        public ReactiveVariable<bool> Value;
+    }
+
     public class CanMove: IEntityComponent
     {
         public ICompositeCondition Value;
