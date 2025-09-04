@@ -1,5 +1,6 @@
 using Gameplay.EntitiesCore.Mono;
 using Gameplay.Features.ApplyDamage;
+using Gameplay.Features.ContactTakeDamage;
 using Gameplay.Features.LifeCycle;
 using Gameplay.Features.MovementFeature;
 using Gameplay.Features.RotationFeature;
@@ -87,7 +88,8 @@ namespace Gameplay.EntitiesCore
                 .AddTakeDamageEvent()
                 .AddContactsDetectingMask(1 << LayerMask.NameToLayer("Characters"))
                 .AddContactCollidersBuffer(new Buffer<Collider>(64))
-                .AddContactEntitiesBuffer(new Buffer<Entity>(64));
+                .AddContactEntitiesBuffer(new Buffer<Entity>(64))
+                .AddBodyContactDamage(new ReactiveVariable<float>(50));
 
             ICompositeCondition canMove = new CompositeCondition()
                 .Add(new FuncCondition(() => entity.IsDead.Value == false));
@@ -117,6 +119,7 @@ namespace Gameplay.EntitiesCore
                 .AddSystem(new RigidbodyRotationSystem())
                 .AddSystem(new BodyContactsDetectingSystem())
                 .AddSystem(new BodyContactsEntitiesFilterSystem(_collidersRegistryService))
+                .AddSystem(new DealDamageOnContactSystem())
                 .AddSystem(new ApplyDamageSystem())
                 .AddSystem(new DeathSystem())
                 .AddSystem(new DeathProcessTimerSystem())

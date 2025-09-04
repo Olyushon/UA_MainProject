@@ -1,0 +1,54 @@
+using System.Collections.Generic;
+using Gameplay.EntitiesCore;
+using Gameplay.EntitiesCore.Systems;
+using Gameplay.Features.ApplyDamage;
+using Utilities;
+using Utilities.Reactive;
+
+namespace Gameplay.Features.ContactTakeDamage
+{
+    public class DealDamageOnContactSystem : IInitializableSystem, IUpdatableSystem
+    {
+        private Buffer<Entity> _contacts;
+        private ReactiveVariable<float> _damage;
+
+        private List<Entity> _processedEntities;
+
+        public void OnInitialize(Entity entity)
+        {
+            _contacts = entity.ContactEntitiesBuffer;
+            _damage = entity.BodyContactDamage;
+
+            _processedEntities = new List<Entity>(_contacts.Items.Length);
+        }
+
+        public void OnUpdate(float deltaTime)
+        {
+            for (var i = 0; i < _contacts.Count; i++) {
+                Entity contactEntity = _contacts.Items[i];
+
+                if (_processedEntities.Contains(contactEntity) == false) {
+                    _processedEntities.Add(contactEntity);
+
+                    if (contactEntity.HasComponent<TakeDamageRequest>())
+                        contactEntity.TakeDamageRequest.Invoke(_damage.Value);
+                }
+            }
+
+            for (var i = _processedEntities.Count - 1; i >= 0; i--) {
+                if (ContainInContacts(_processedEntities[i]) == false)
+                    _processedEntities.RemoveAt(i);
+            }
+        }
+
+        private bool ContainInContacts(Entity entity)
+        {
+            for (var i = 0; i < _contacts.Count; i++) {
+                if (_contacts.Items[i] == entity)
+                    return true;
+            }
+
+            return false;
+        }
+    }
+}

@@ -223,6 +223,20 @@ namespace Gameplay.EntitiesCore
 			return AddComponent(new Gameplay.Features.LifeCycle.InDeathProcess() {Value = value}); 
 		}
 
+		public Gameplay.Features.ContactTakeDamage.BodyContactDamage BodyContactDamageC => GetComponent<Gameplay.Features.ContactTakeDamage.BodyContactDamage>();
+
+		public Utilities.Reactive.ReactiveVariable<System.Single> BodyContactDamage => BodyContactDamageC.Value;
+
+		public Gameplay.EntitiesCore.Entity AddBodyContactDamage()
+		{
+			return AddComponent(new Gameplay.Features.ContactTakeDamage.BodyContactDamage() { Value = new Utilities.Reactive.ReactiveVariable<System.Single>() }); 
+		}
+
+		public Gameplay.EntitiesCore.Entity AddBodyContactDamage(Utilities.Reactive.ReactiveVariable<System.Single> value)
+		{
+			return AddComponent(new Gameplay.Features.ContactTakeDamage.BodyContactDamage() {Value = value}); 
+		}
+
 		public Gameplay.Features.ApplyDamage.TakeDamageRequest TakeDamageRequestC => GetComponent<Gameplay.Features.ApplyDamage.TakeDamageRequest>();
 
 		public Utilities.Reactive.ReactiveEvent<System.Single> TakeDamageRequest => TakeDamageRequestC.Value;
