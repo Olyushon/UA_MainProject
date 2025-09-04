@@ -223,6 +223,20 @@ namespace Gameplay.EntitiesCore
 			return AddComponent(new Gameplay.Features.LifeCycle.InDeathProcess() {Value = value}); 
 		}
 
+		public Gameplay.Features.LifeCycle.DisableCollidersOnDeath DisableCollidersOnDeathC => GetComponent<Gameplay.Features.LifeCycle.DisableCollidersOnDeath>();
+
+		public System.Collections.Generic.List<UnityEngine.Collider> DisableCollidersOnDeath => DisableCollidersOnDeathC.Value;
+
+		public Gameplay.EntitiesCore.Entity AddDisableCollidersOnDeath()
+		{
+			return AddComponent(new Gameplay.Features.LifeCycle.DisableCollidersOnDeath() { Value = new System.Collections.Generic.List<UnityEngine.Collider>() }); 
+		}
+
+		public Gameplay.EntitiesCore.Entity AddDisableCollidersOnDeath(System.Collections.Generic.List<UnityEngine.Collider> value)
+		{
+			return AddComponent(new Gameplay.Features.LifeCycle.DisableCollidersOnDeath() {Value = value}); 
+		}
+
 		public Gameplay.Features.ContactTakeDamage.BodyContactDamage BodyContactDamageC => GetComponent<Gameplay.Features.ContactTakeDamage.BodyContactDamage>();
 
 		public Utilities.Reactive.ReactiveVariable<System.Single> BodyContactDamage => BodyContactDamageC.Value;
