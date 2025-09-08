@@ -409,6 +409,29 @@ namespace Gameplay.EntitiesCore
 			return AddComponent(new Gameplay.Features.Attack.ShootPoint() {Value = value}); 
 		}
 
+		public Gameplay.Features.Attack.MustCancelAttack MustCancelAttackC => GetComponent<Gameplay.Features.Attack.MustCancelAttack>();
+
+		public Utilities.Conditions.ICompositeCondition MustCancelAttack => MustCancelAttackC.Value;
+
+		public Gameplay.EntitiesCore.Entity AddMustCancelAttack(Utilities.Conditions.ICompositeCondition value)
+		{
+			return AddComponent(new Gameplay.Features.Attack.MustCancelAttack() {Value = value}); 
+		}
+
+		public Gameplay.Features.Attack.AttackCanceledEvent AttackCanceledEventC => GetComponent<Gameplay.Features.Attack.AttackCanceledEvent>();
+
+		public Utilities.Reactive.ReactiveEvent AttackCanceledEvent => AttackCanceledEventC.Value;
+
+		public Gameplay.EntitiesCore.Entity AddAttackCanceledEvent()
+		{
+			return AddComponent(new Gameplay.Features.Attack.AttackCanceledEvent() { Value = new Utilities.Reactive.ReactiveEvent() }); 
+		}
+
+		public Gameplay.EntitiesCore.Entity AddAttackCanceledEvent(Utilities.Reactive.ReactiveEvent value)
+		{
+			return AddComponent(new Gameplay.Features.Attack.AttackCanceledEvent() {Value = value}); 
+		}
+
 		public Gameplay.Features.ApplyDamage.TakeDamageRequest TakeDamageRequestC => GetComponent<Gameplay.Features.ApplyDamage.TakeDamageRequest>();
 
 		public Utilities.Reactive.ReactiveEvent<System.Single> TakeDamageRequest => TakeDamageRequestC.Value;

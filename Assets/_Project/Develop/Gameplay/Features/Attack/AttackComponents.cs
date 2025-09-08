@@ -59,4 +59,14 @@ namespace Gameplay.Features.Attack
     {
         public Transform Value;
     }
+
+    public class MustCancelAttack: IEntityComponent
+    {
+        public ICompositeCondition Value;
+    }
+
+    public class AttackCanceledEvent: IEntityComponent
+    {
+        public ReactiveEvent Value;
+    }
 }
