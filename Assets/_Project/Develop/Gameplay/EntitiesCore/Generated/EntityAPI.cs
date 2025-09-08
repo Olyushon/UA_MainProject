@@ -358,6 +358,34 @@ namespace Gameplay.EntitiesCore
 			return AddComponent(new Gameplay.Features.Attack.InAttackProcess() {Value = value}); 
 		}
 
+		public Gameplay.Features.Attack.AttackDelayTime AttackDelayTimeC => GetComponent<Gameplay.Features.Attack.AttackDelayTime>();
+
+		public Utilities.Reactive.ReactiveVariable<System.Single> AttackDelayTime => AttackDelayTimeC.Value;
+
+		public Gameplay.EntitiesCore.Entity AddAttackDelayTime()
+		{
+			return AddComponent(new Gameplay.Features.Attack.AttackDelayTime() { Value = new Utilities.Reactive.ReactiveVariable<System.Single>() }); 
+		}
+
+		public Gameplay.EntitiesCore.Entity AddAttackDelayTime(Utilities.Reactive.ReactiveVariable<System.Single> value)
+		{
+			return AddComponent(new Gameplay.Features.Attack.AttackDelayTime() {Value = value}); 
+		}
+
+		public Gameplay.Features.Attack.AttackDelayEndEvent AttackDelayEndEventC => GetComponent<Gameplay.Features.Attack.AttackDelayEndEvent>();
+
+		public Utilities.Reactive.ReactiveEvent AttackDelayEndEvent => AttackDelayEndEventC.Value;
+
+		public Gameplay.EntitiesCore.Entity AddAttackDelayEndEvent()
+		{
+			return AddComponent(new Gameplay.Features.Attack.AttackDelayEndEvent() { Value = new Utilities.Reactive.ReactiveEvent() }); 
+		}
+
+		public Gameplay.EntitiesCore.Entity AddAttackDelayEndEvent(Utilities.Reactive.ReactiveEvent value)
+		{
+			return AddComponent(new Gameplay.Features.Attack.AttackDelayEndEvent() {Value = value}); 
+		}
+
 		public Gameplay.Features.ApplyDamage.TakeDamageRequest TakeDamageRequestC => GetComponent<Gameplay.Features.ApplyDamage.TakeDamageRequest>();
 
 		public Utilities.Reactive.ReactiveEvent<System.Single> TakeDamageRequest => TakeDamageRequestC.Value;

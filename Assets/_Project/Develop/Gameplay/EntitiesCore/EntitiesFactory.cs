@@ -159,7 +159,9 @@ namespace Gameplay.EntitiesCore
                 .AddInAttackProcess()
                 .AddStartAttackRequest()
                 .AddStartAttackEvent()
-                .AddEndAttackEvent();
+                .AddEndAttackEvent()
+                .AddAttackDelayTime(new ReactiveVariable<float>(1f))
+                .AddAttackDelayEndEvent();
 
             ICompositeCondition canMove = new CompositeCondition()
                 .Add(new FuncCondition(() => entity.IsDead.Value == false));
@@ -195,6 +197,7 @@ namespace Gameplay.EntitiesCore
                 .AddSystem(new RigidbodyRotationSystem())
                 .AddSystem(new StartAttackSystem())
                 .AddSystem(new AttackProcessTimerSystem())
+                .AddSystem(new AttackDelayEndTriggerSystem())
                 .AddSystem(new EndAttackSystem())
                 .AddSystem(new ApplyDamageSystem())
                 .AddSystem(new DeathSystem())
