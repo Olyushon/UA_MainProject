@@ -386,6 +386,29 @@ namespace Gameplay.EntitiesCore
 			return AddComponent(new Gameplay.Features.Attack.AttackDelayEndEvent() {Value = value}); 
 		}
 
+		public Gameplay.Features.Attack.InstantAttackDamage InstantAttackDamageC => GetComponent<Gameplay.Features.Attack.InstantAttackDamage>();
+
+		public Utilities.Reactive.ReactiveVariable<System.Single> InstantAttackDamage => InstantAttackDamageC.Value;
+
+		public Gameplay.EntitiesCore.Entity AddInstantAttackDamage()
+		{
+			return AddComponent(new Gameplay.Features.Attack.InstantAttackDamage() { Value = new Utilities.Reactive.ReactiveVariable<System.Single>() }); 
+		}
+
+		public Gameplay.EntitiesCore.Entity AddInstantAttackDamage(Utilities.Reactive.ReactiveVariable<System.Single> value)
+		{
+			return AddComponent(new Gameplay.Features.Attack.InstantAttackDamage() {Value = value}); 
+		}
+
+		public Gameplay.Features.Attack.ShootPoint ShootPointC => GetComponent<Gameplay.Features.Attack.ShootPoint>();
+
+		public UnityEngine.Transform ShootPoint => ShootPointC.Value;
+
+		public Gameplay.EntitiesCore.Entity AddShootPoint(UnityEngine.Transform value)
+		{
+			return AddComponent(new Gameplay.Features.Attack.ShootPoint() {Value = value}); 
+		}
+
 		public Gameplay.Features.ApplyDamage.TakeDamageRequest TakeDamageRequestC => GetComponent<Gameplay.Features.ApplyDamage.TakeDamageRequest>();
 
 		public Utilities.Reactive.ReactiveEvent<System.Single> TakeDamageRequest => TakeDamageRequestC.Value;
