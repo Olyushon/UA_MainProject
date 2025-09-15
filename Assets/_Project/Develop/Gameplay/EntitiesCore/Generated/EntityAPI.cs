@@ -432,6 +432,48 @@ namespace Gameplay.EntitiesCore
 			return AddComponent(new Gameplay.Features.Attack.AttackCanceledEvent() {Value = value}); 
 		}
 
+		public Gameplay.Features.Attack.AttackCooldownInitialTime AttackCooldownInitialTimeC => GetComponent<Gameplay.Features.Attack.AttackCooldownInitialTime>();
+
+		public Utilities.Reactive.ReactiveVariable<System.Single> AttackCooldownInitialTime => AttackCooldownInitialTimeC.Value;
+
+		public Gameplay.EntitiesCore.Entity AddAttackCooldownInitialTime()
+		{
+			return AddComponent(new Gameplay.Features.Attack.AttackCooldownInitialTime() { Value = new Utilities.Reactive.ReactiveVariable<System.Single>() }); 
+		}
+
+		public Gameplay.EntitiesCore.Entity AddAttackCooldownInitialTime(Utilities.Reactive.ReactiveVariable<System.Single> value)
+		{
+			return AddComponent(new Gameplay.Features.Attack.AttackCooldownInitialTime() {Value = value}); 
+		}
+
+		public Gameplay.Features.Attack.AttackCooldownCurrentTime AttackCooldownCurrentTimeC => GetComponent<Gameplay.Features.Attack.AttackCooldownCurrentTime>();
+
+		public Utilities.Reactive.ReactiveVariable<System.Single> AttackCooldownCurrentTime => AttackCooldownCurrentTimeC.Value;
+
+		public Gameplay.EntitiesCore.Entity AddAttackCooldownCurrentTime()
+		{
+			return AddComponent(new Gameplay.Features.Attack.AttackCooldownCurrentTime() { Value = new Utilities.Reactive.ReactiveVariable<System.Single>() }); 
+		}
+
+		public Gameplay.EntitiesCore.Entity AddAttackCooldownCurrentTime(Utilities.Reactive.ReactiveVariable<System.Single> value)
+		{
+			return AddComponent(new Gameplay.Features.Attack.AttackCooldownCurrentTime() {Value = value}); 
+		}
+
+		public Gameplay.Features.Attack.InAttackCooldown InAttackCooldownC => GetComponent<Gameplay.Features.Attack.InAttackCooldown>();
+
+		public Utilities.Reactive.ReactiveVariable<System.Boolean> InAttackCooldown => InAttackCooldownC.Value;
+
+		public Gameplay.EntitiesCore.Entity AddInAttackCooldown()
+		{
+			return AddComponent(new Gameplay.Features.Attack.InAttackCooldown() { Value = new Utilities.Reactive.ReactiveVariable<System.Boolean>() }); 
+		}
+
+		public Gameplay.EntitiesCore.Entity AddInAttackCooldown(Utilities.Reactive.ReactiveVariable<System.Boolean> value)
+		{
+			return AddComponent(new Gameplay.Features.Attack.InAttackCooldown() {Value = value}); 
+		}
+
 		public Gameplay.Features.ApplyDamage.TakeDamageRequest TakeDamageRequestC => GetComponent<Gameplay.Features.ApplyDamage.TakeDamageRequest>();
 
 		public Utilities.Reactive.ReactiveEvent<System.Single> TakeDamageRequest => TakeDamageRequestC.Value;
