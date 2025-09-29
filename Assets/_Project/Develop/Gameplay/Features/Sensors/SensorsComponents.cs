@@ -1,6 +1,7 @@
 using Gameplay.EntitiesCore;
 using UnityEngine;
 using Utilities;
+using Utilities.Reactive;
 
 namespace Gameplay.Features.Sensors
 {
@@ -22,5 +23,15 @@ namespace Gameplay.Features.Sensors
     public class ContactEntitiesBuffer : IEntityComponent
     {
         public Buffer<Entity> Value;
+    }
+
+    public class DeathMask : IEntityComponent
+    {
+        public LayerMask Value;
+    }
+
+    public class IsTouchDeathMask : IEntityComponent
+    {
+        public ReactiveVariable<bool> Value;
     }
 }

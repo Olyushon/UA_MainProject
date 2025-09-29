@@ -38,6 +38,29 @@ namespace Gameplay.EntitiesCore
 			return AddComponent(new Gameplay.Features.Sensors.ContactEntitiesBuffer() {Value = value}); 
 		}
 
+		public Gameplay.Features.Sensors.DeathMask DeathMaskC => GetComponent<Gameplay.Features.Sensors.DeathMask>();
+
+		public UnityEngine.LayerMask DeathMask => DeathMaskC.Value;
+
+		public Gameplay.EntitiesCore.Entity AddDeathMask(UnityEngine.LayerMask value)
+		{
+			return AddComponent(new Gameplay.Features.Sensors.DeathMask() {Value = value}); 
+		}
+
+		public Gameplay.Features.Sensors.IsTouchDeathMask IsTouchDeathMaskC => GetComponent<Gameplay.Features.Sensors.IsTouchDeathMask>();
+
+		public Utilities.Reactive.ReactiveVariable<System.Boolean> IsTouchDeathMask => IsTouchDeathMaskC.Value;
+
+		public Gameplay.EntitiesCore.Entity AddIsTouchDeathMask()
+		{
+			return AddComponent(new Gameplay.Features.Sensors.IsTouchDeathMask() { Value = new Utilities.Reactive.ReactiveVariable<System.Boolean>() }); 
+		}
+
+		public Gameplay.EntitiesCore.Entity AddIsTouchDeathMask(Utilities.Reactive.ReactiveVariable<System.Boolean> value)
+		{
+			return AddComponent(new Gameplay.Features.Sensors.IsTouchDeathMask() {Value = value}); 
+		}
+
 		public Gameplay.Features.RotationFeature.RotationDirection RotationDirectionC => GetComponent<Gameplay.Features.RotationFeature.RotationDirection>();
 
 		public Utilities.Reactive.ReactiveVariable<UnityEngine.Vector3> RotationDirection => RotationDirectionC.Value;

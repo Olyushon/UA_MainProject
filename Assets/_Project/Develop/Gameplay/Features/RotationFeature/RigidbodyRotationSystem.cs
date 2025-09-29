@@ -20,6 +20,9 @@ namespace Gameplay.Features.RotationFeature
             _rigidbody = entity.Rigidbody;
 
             _canRotate = entity.CanRotate;
+
+            if (_rotationDirection.Value.magnitude > 0.1f)
+                _rigidbody.transform.rotation = Quaternion.LookRotation(_rotationDirection.Value.normalized);
         }
 
         public void OnUpdate(float deltaTime)
