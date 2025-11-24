@@ -279,5 +279,39 @@ namespace Gameplay.EntitiesCore
 
             return entity;
         }
+
+        public Entity CreateNewCharacterEntity(Vector3 position) {
+            Entity entity = CreateEmpty();
+
+            _monoEntitiesFactory.Create(entity, position, "Entities/NewCharacter");
+
+            entity
+                .AddCurrentHealth(new ReactiveVariable<float>(100f))
+                .AddMaxHealth(new ReactiveVariable<float>(100f))
+                .AddIsDead();
+
+            ICompositeCondition mustDie = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.CurrentHealth.Value <= 0));
+
+            ICompositeCondition mustSelfRelease = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.IsDead.Value));
+
+            ICompositeCondition canApplyDamage = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.IsDead.Value == false));
+
+            entity
+                .AddMustDie(mustDie)
+                .AddMustSelfRelease(mustSelfRelease)
+                .AddCanApplyDamage(canApplyDamage);
+
+            entity
+                .AddSystem(new DeathSystem())
+                .AddSystem(new DisableCollidersOnDeathSystem())
+                .AddSystem(new SelfReleaseSystem(_entitiesLifeContext));
+
+            _entitiesLifeContext.Add(entity);
+
+            return entity;
+        }
     }
 }
